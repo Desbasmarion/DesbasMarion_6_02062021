@@ -21,7 +21,7 @@ header {
 .tags {
   display: flex;
   justify-content: space-between;
-  width: 553px;
+  width: 34.5625em;
 }
 .tags li {
   list-style: none;
@@ -30,6 +30,8 @@ header {
   border-radius: 11px;
   color: #901C1C;
   font-weight: 500;
+  padding: 0.4em;
+  font-size: 0.75em;
 }
 
 h1 {
@@ -40,6 +42,7 @@ main {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin-top: 4em;
 }
 
 .fiche_photographe {
@@ -50,16 +53,36 @@ main {
 }
 .fiche_photographe a {
   text-decoration: none;
+  text-align: center;
 }
 .fiche_photographe a > img {
   border-radius: 50%;
 }
 .fiche_photographe a > h2 {
   color: #D3573C;
+  font-size: 2.25em;
+  font-weight: 400;
 }
 .fiche_photographe ul {
   display: flex;
 }
 .fiche_photographe li {
   list-style: none;
+  border: 0.5px solid #C4C4C4;
+  box-sizing: border-box;
+  border-radius: 11px;
+  color: #901C1C;
+  font-weight: 500;
+  font-size: 0.75em;
+}
+.fiche_photographe p {
+  font-size: 0.625em;
+}
+.fiche_photographe .localisation {
+  color: #901C1C;
+  font-size: 0.8125em;
+}
+.fiche_photographe .tarif {
+  color: #757575;
+  font-size: 0.5625em;
 }/*# sourceMappingURL=style.css.map */
