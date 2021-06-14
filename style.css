@@ -1,3 +1,4 @@
+/* mise en page index*/
 * {
   font-family: "DM Sans", sans-serif;
 }
@@ -33,6 +34,11 @@ header {
   padding: 0.4em;
   font-size: 0.75em;
 }
+.tags li:hover {
+  color: white;
+  background-color: #901C1C;
+  cursor: pointer;
+}
 
 h1 {
   color: #901C1C;
@@ -50,6 +56,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2.5em;
 }
 .fiche_photographe a {
   text-decoration: none;
@@ -62,9 +69,13 @@ main {
   color: #D3573C;
   font-size: 2.25em;
   font-weight: 400;
+  margin-bottom: 0.1875em;
 }
 .fiche_photographe ul {
   display: flex;
+  justify-content: space-between;
+  margin: 0.1875em;
+  padding: 0;
 }
 .fiche_photographe li {
   list-style: none;
@@ -74,15 +85,26 @@ main {
   color: #901C1C;
   font-weight: 500;
   font-size: 0.75em;
+  margin-right: 0.5em;
+  padding: 0.4em;
+}
+.fiche_photographe li:hover {
+  color: white;
+  background-color: #901C1C;
+  cursor: pointer;
 }
 .fiche_photographe p {
   font-size: 0.625em;
+  margin: 0.1875em;
 }
 .fiche_photographe .localisation {
   color: #901C1C;
   font-size: 0.8125em;
+  margin: 0.1875em;
 }
 .fiche_photographe .tarif {
   color: #757575;
   font-size: 0.5625em;
-}/*# sourceMappingURL=style.css.map */
+}
+
+/* mise en page fiches photographes*//*# sourceMappingURL=style.css.map */
