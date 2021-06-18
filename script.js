@@ -18,25 +18,38 @@ let tagSport = document.querySelector(".button_sport");
 let tagAnimals = document.querySelector(".button_animals");
 let tagEvents = document.querySelector(".button_events");
 
+let allLiNav = document.getElementsByTagName("li");
+
 let allFichePhotographe = document.querySelectorAll(".fiche_photographe");
 let arrayFichePhotographe = Array.from(allFichePhotographe);
-
 
 /*Evenement sur tags + fonction filtre*/
 tagPortrait.addEventListener("click", e =>{
     arrayFichePhotographe.filter(filtreTags);
 });
 
-function filtreTags(tag){
+function filtreTags(el){
+    for(i=0; i<allLiNav.length; i++){
+
+        let textLi = allLiNav[i].innerText;
+       
+        if(textLi != "#portrait"){
+            textLi.style.color = "green";
+        };
+    }
+}
+
+
+/*function filtreTags(tag){
     for(i=0; i<allFichePhotographe.length; i++){
 
         let childrenFiche = allFichePhotographe[i].childNodes;
         
-        console.log(childrenFiche)
         for (let i = 0; i < childrenFiche.length; i++) {
-            if(childrenFiche[i].textContent = tagPortrait.textContent){
-                
-            }
+
+            let childFiche = childrenFiche[i].innerText;
+            
         }
     }
 }
+*/
