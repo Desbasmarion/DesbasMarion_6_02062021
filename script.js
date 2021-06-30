@@ -30,4 +30,7 @@ tagPortrait.addEventListener("click", e =>{
     arrayFichePhotographe.filter(filtreTags);
 });
 
-/* utiliser méthode fetch() pour récupération fichier json*/ 
+fetch("script.json")
+.then(response => response.json())
+.then(response => alert(JSON.stringify(response)))
+.catch(error => alert("Erreur : " + error));
