@@ -64,6 +64,10 @@ main {
 }
 .fiche_photographe a > img {
   border-radius: 50%;
+  width: 224px;
+  height: 224px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .fiche_photographe a > h2 {
   color: #D3573C;

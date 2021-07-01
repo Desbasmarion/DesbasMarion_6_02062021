@@ -58,6 +58,9 @@ main{
     }
     a>img{
         border-radius: 50%;
+        width: 224px;
+        height: 224px;
+        object-fit: cover;
     }
     a>h2{
         color: #D3573C;

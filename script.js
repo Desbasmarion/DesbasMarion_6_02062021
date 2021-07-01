@@ -30,7 +30,13 @@ tagPortrait.addEventListener("click", e =>{
     arrayFichePhotographe.filter(filtreTags);
 });
 
+let img = document.getElementById("Mimi_Keel")
+
 fetch("script.json")
 .then(response => response.json())
-.then(response => alert(JSON.stringify(response)))
-.catch(error => alert("Erreur : " + error));
+.then (data => img.src = data.photographers[0].portrait)
+
+/* 
+1- Récupérer toutes les images profils photographes avec js
+2- les implémenter via fetch
+*/
