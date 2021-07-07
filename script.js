@@ -24,19 +24,37 @@ let allLiNav = document.getElementsByTagName("li");
 let allFichePhotographe = document.querySelectorAll(".fiche_photographe");
 let arrayFichePhotographe = Array.from(allFichePhotographe);
 
+/*intégration images en JS */
+let img = document.getElementById("Mimi_Keel")
 
-/*Evenement sur tags + fonction filtre*/
-tagPortrait.addEventListener("click", e =>{
-    arrayFichePhotographe.filter(filtreTags);
+/*fetch("script.json")
+.then(response => response.json())
+.then (data => img.src = data.photographers[0].portrait)
+*/
+/*fonction filtre*/
+tagPortrait.addEventListener("click", e => {
+    fetch("script.json")
+    .then(response => response.json())
+/*Je teste la fonctionnalité sur la première fiche photographe*/
+    .then (dataTags => dataTags.photographers.filter(e =>{
+        photographers.tags = "portrait";
+        console.log(dataTags)
+    }))
 });
 
-let img = document.getElementById("Mimi_Keel")
+
+/*Implémenter images pages photographes en JS*/
+let photosContainer = document.querySelector(".photos")
+
 
 fetch("script.json")
 .then(response => response.json())
-.then (data => img.src = data.photographers[0].portrait)
+.then (dataPhotos => {
+    for(i=0; i<dataPhotos.media.lenght; i++){
+        if(media[i].photographerID = "242"){
+           let resultImg = document.createElement("img");
+            resultImg.src = dataPhotos.media.image;
+        }
+    }
+})
 
-/* 
-1- Récupérer toutes les images profils photographes avec js
-2- les implémenter via fetch
-*/
