@@ -12,23 +12,23 @@ body{
     margin-top: 2.625em;
     justify-content: space-around;
     align-items: center;
+    width: 100%;
+    flex-wrap: wrap;
 }
 .logo{
     height: 50px;
-    width: 200px;
+    width: auto;
 }
 .tags{
     display: flex;
     justify-content: space-between;
-    width: 34.5625em;
+    padding: 0;
+    flex-wrap: wrap;
     li{
         list-style: none;
-        border: 0.5px solid #C4C4C4;
-        box-sizing: border-box;
-        border-radius: 11px;
         color: #901C1C;
         font-weight: 500;
-        padding: 0.4em;
+        padding: 0.2em;
         font-size: 0.75em;
         &:hover{
             color: white;
@@ -39,6 +39,7 @@ body{
 }
 h1{
     color: #901C1C;
+    width: auto;
 }
 #allFichesPhotographers{
     display: flex;
@@ -180,4 +181,76 @@ h1{
     font-size: 24px;
     font-weight: 400;
     margin: 0;
+}
+
+//Responsive mobile index
+@media screen and (max-width: 426px) {
+    body{
+        margin: 3%;
+        max-width: 100%;
+    }
+    .tags{
+        width: 100%;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+    #banner_index{
+        display: block;
+    }
+    .logo{
+        width: 40%;
+        height: 10%;
+    }
+    h1{
+        font-size: 14px;
+        position: absolute;
+        bottom: 365px;
+        right: 10px;
+        font-weight: 400;
+        width: auto;
+    }
+    #allFichesPhotographers{
+        flex-direction: column;
+        margin-top: 0;
+    }
+    .fiche_photographe{
+        width: 100%;
+    }
+
+    //Responsive fiches photographes
+    .logo_fiche{
+        width: 50%;
+        margin: auto;
+        margin-top: 3%;
+    }
+    .header_photographe{
+        background-color: white;
+        padding: 0;
+        width: 100%;
+        height: auto;
+        h1{
+            position: initial;
+            font-size: 36px;
+            width: 65%;
+        }
+        p{
+            font-size: 13px;
+        }
+        >:nth-child(3){
+            font-size: 13px;
+            margin-top: 2%;
+        }
+        img{
+            width: 30%;
+            right: 20px;
+            top: 90px;
+        }
+        li{
+            font-size: 13px;
+        }
+        .button_contact, .button_contact_ellie, .button_contact_mimi{
+            display: none;
+        }
+
+    }
 }
