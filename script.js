@@ -24,6 +24,44 @@ let allLiNav = document.getElementsByTagName("li");
 let allFichePhotographe = document.querySelectorAll(".fiche_photographe");
 let arrayFichePhotographe = Array.from(allFichePhotographe);
 
+let tab = [
+    {
+        "id": 1,
+        "age": 12,
+        "rue": "la vallée",
+    },
+    {
+        "id": 2,
+        "age" : 19,
+        "rue" : "le clos",
+    },
+    {
+        "id" : 3,
+        "age" : 22,
+        "rue" : "brisou",
+    },
+        
+]
+
+let result = tab.filter(function(tab){
+    if (tab.age > 18){
+        return true
+    }
+})
+/*meme fonction mais syntaxe simplifiée
+let result = tab.filter (tab => (tag.age > 18))
+})
+
+/*Filtrage tableau json*/ 
+fetch("script.json")
+.then(response => response.json())
+.then(function (newTab) {
+    let newTableau = newTab.concat("photographers", "media")
+    console.log(newTableau)
+})
+
+
+
 /*intégration images en JS */
 let img = document.getElementById("Mimi_Keel")
 
@@ -31,30 +69,5 @@ let img = document.getElementById("Mimi_Keel")
 .then(response => response.json())
 .then (data => img.src = data.photographers[0].portrait)
 */
-/*fonction filtre*/
-tagPortrait.addEventListener("click", e => {
-    fetch("script.json")
-    .then(response => response.json())
-/*Je teste la fonctionnalité sur la première fiche photographe*/
-    .then (dataTags => dataTags.photographers.filter(e =>{
-        photographers.tags = "portrait";
-        console.log(dataTags)
-    }))
-});
 
-
-/*Implémenter images pages photographes en JS*/
-let photosContainer = document.querySelector(".photos")
-
-
-fetch("script.json")
-.then(response => response.json())
-.then (dataPhotos => {
-    for(i=0; i<dataPhotos.media.lenght; i++){
-        if(media[i].photographerID = "242"){
-           let resultImg = document.createElement("img");
-            resultImg.src = dataPhotos.media.image;
-        }
-    }
-})
 
