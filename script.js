@@ -1,14 +1,3 @@
-/*tags
-Si un tags selectionné dans le banner est présent dans une fiche photographes, alors afficher toutes les fiches photographes concernées
-*/
-
-/*methodo
-1- integration html/css
-2- accessibilité
-3- Js
-*/
-
-
 /*Récupération des tags*/
 let tagPortrait = document.querySelector(".button_portrait");
 let tagArt = document.querySelector(".button_art");
@@ -24,7 +13,48 @@ let allLiNav = document.getElementsByTagName("li");
 let allFichePhotographe = document.querySelectorAll(".fiche_photographe");
 let arrayFichePhotographe = Array.from(allFichePhotographe);
 
-let tab = [
+//Récupération tableaux JSON 
+let tabsJson = fetch ("script.json")
+.then((response) => response.json())
+.then(data => {
+    //je récupère les 2 tableaux 
+    let dataPhotographers = data.photographers;
+    let dataMedia = data.media;
+
+    //je concatène les 2 tableaux pour pouvoir les filtrer 
+    let newTabConcat = dataPhotographers.concat(dataMedia);
+    
+    //je laisse uniquement les tags en contenu 
+    let tagsTabConcat = newTabConcat.map(function (tags) {
+        return tags.tags
+        
+      });
+    
+    //je filtre mon nouveau tableau de tags
+    tagsTabConcat.filter(e => {
+        for(i=0; i<tagsTabConcat.length; i++){
+            if(tagsTabConcat[i] == "art"){
+                console.log("ok")
+            }else{
+                
+            }
+        }
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+//Ex fonction filtre sur tableau 
+/*let tab = [
     {
         "id": 1,
         "age": 12,
@@ -48,22 +78,15 @@ let result = tab.filter(function(tab){
         return true
     }
 })
-/*meme fonction mais syntaxe simplifiée
-let result = tab.filter (tab => (tag.age > 18))
-})
 
-/*Filtrage tableau json*/ 
-fetch("script.json")
-.then(response => response.json())
-.then(function (newTab) {
-    let newTableau = newTab.concat("photographers", "media")
-    console.log(newTableau)
+//meme fonction mais syntaxe simplifiée
+let result = tab.filter (tab => (tab.age > 18))
 })
-
+*/
 
 
 /*intégration images en JS */
-let img = document.getElementById("Mimi_Keel")
+//let img = document.getElementById("Mimi_Keel")
 
 /*fetch("script.json")
 .then(response => response.json())
