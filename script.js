@@ -1,17 +1,28 @@
 /*Récupération des tags*/
-let tagPortrait = document.querySelector(".button_portrait");
-let tagArt = document.querySelector(".button_art");
-let tagFashion = document.querySelector(".button_fashion");
-let tagArchitecture = document.querySelector(".button_architecture");
-let tagTravel = document.querySelector(".button_travel");
-let tagSport = document.querySelector(".button_sport");
-let tagAnimals = document.querySelector(".button_animals");
-let tagEvents = document.querySelector(".button_events");
+let buttonPortrait = document.querySelector(".button_portrait");
+let buttonArt = document.querySelector(".button_art");
+let buttonFashion = document.querySelector(".button_fashion");
+let buttonArchitecture = document.querySelector(".button_architecture");
+let buttonTravel = document.querySelector(".button_travel");
+let buttonSport = document.querySelector(".button_sport");
+let buttonAnimals = document.querySelector(".button_animals");
+let buttonEvents = document.querySelector(".button_events");
+let allButtons = document.querySelectorAll("button")
+
+let tagsPortrait = document.querySelectorAll(".tag_portrait");
+let tagsArt = document.querySelectorAll(".tag_art");
+let tagsFashion = document.querySelectorAll(".tag_fashion");
+let tagsArchitecture = document.querySelectorAll(".tag_architecture");
+let tagsTravel = document.querySelectorAll(".tag_travel");
+let tagsSport = document.querySelectorAll(".tag_sport");
+let tagsAnimals = document.querySelectorAll(".tag_animals");
+let tagsEvents = document.querySelectorAll(".tag_events");
 
 let allLiNav = document.getElementsByTagName("li");
 
 let allFichePhotographe = document.querySelectorAll(".fiche_photographe");
 let arrayFichePhotographe = Array.from(allFichePhotographe);
+
 
 //Récupération tableaux JSON 
 let tabsJson = fetch ("script.json")
@@ -25,72 +36,43 @@ let tabsJson = fetch ("script.json")
     let newTabConcat = dataPhotographers.concat(dataMedia);
     
     //je laisse uniquement les tags en contenu 
-    let tagsTabConcat = newTabConcat.map(function (tags) {
-        return tags.tags
-        
-      });
+    let tagsTabConcat = newTabConcat.map(tags => tags.tags);
     
-    //je filtre mon nouveau tableau de tags
-    tagsTabConcat.filter(e => {
-        for(i=0; i<tagsTabConcat.length; i++){
-            if(tagsTabConcat[i] == "art"){
-                console.log("ok")
-            }else{
-                
-            }
-        }
+    //je filtre mon nouveau tableau de tags quand un button est cliqué, avec boucle 
+    allButtons.forEach(item => {
+        item.addEventListener('click', e => {
+            let resultFilter = tagsTabConcat.flat().filter(tag => {
+                if( tag == item.name){
+                    return true;
+                }else{
+                    return false;
+                }
+            })
+            arrayFichePhotographe.forEach(item => console.log(item))
+        })
     })
 })
 
+//intégration photos des pages photographes
+let containerPhotos = document.querySelector("#photosMimi")
 
-
-
-
-
-
-
-
-
-
-
-//Ex fonction filtre sur tableau 
-/*let tab = [
-    {
-        "id": 1,
-        "age": 12,
-        "rue": "la vallée",
-    },
-    {
-        "id": 2,
-        "age" : 19,
-        "rue" : "le clos",
-    },
-    {
-        "id" : 3,
-        "age" : 22,
-        "rue" : "brisou",
-    },
-        
-]
-
-let result = tab.filter(function(tab){
-    if (tab.age > 18){
-        return true
-    }
-})
-
-//meme fonction mais syntaxe simplifiée
-let result = tab.filter (tab => (tab.age > 18))
-})
-*/
-
-
-/*intégration images en JS */
-//let img = document.getElementById("Mimi_Keel")
-
-/*fetch("script.json")
+fetch("script.json")
 .then(response => response.json())
-.then (data => img.src = data.photographers[0].portrait)
-*/
+.then (data => {
+    let dataMedia = data.media;
+    let dataMimi = function(){
+        if (dataMedia.photographerId = 243){
+            return data
+        }
+    }
 
-
+    let imageAddress = data.media.map(img => img.image)
+    
+    dataMedia.forEach(e=>{
+        if (dataMedia.photographerId = 243){  
+            let newImages = document.createElement("img");
+            newImages.src = "Sample_Photos/Mimi".concat(imageAddress);
+            
+        }
+    })
+})
