@@ -36,22 +36,68 @@ let tabsJson = fetch ("script.json")
 
     //je concatène les 2 tableaux pour pouvoir les filtrer 
     let tabPhotographers = dataPhotographers.concat(dataMedia);
+
+    //je créer dynamiquement fiches photographes
+    let listOfPhotographers ="";
+
+    dataPhotographers.forEach(fiche => 
+        listOfPhotographers += `
+            <div class = "fiche_photographe">
+                <a href = "Mimi_Keel_Page.html">
+                    <img src = "./Sample_Photos/Photographers ID Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
+                    <h2>${fiche.name}</h2>
+                </a>
+                <p class = "localisation">${fiche.city}</p>
+                <p>${fiche.tagline}</p>
+                <p class = "tarif">${fiche.price}€</p>
+                <nav>
+                    <ul>
+                        <li>${fiche.tags}</li>
+                    </ul>
+                </nav>
+            </div>
+        `
+    )
+
+    containerFichesPhotograhes.innerHTML = listOfPhotographers;
     
     //je filtre mon nouveau tableau de photographes quand un button est cliqué, avec boucle 
     allButtons.forEach(item => {
         item.addEventListener('click', e => {
-            let resultFilter = tabPhotographers.filter(photographe => {
+            let resultFilter = dataPhotographers.filter(photographe => {
                 if( photographe.tags.includes(item.name)){
                     return true;
                 }else{
                     return false;
                 }
             })
-            console.log(resultFilter);
+
+            let listOfPhotographersFilter = "";
+
+            resultFilter.forEach(result => 
+                listOfPhotographersFilter += `
+                <div class = "fiche_photographe">
+                    <a href = "Mimi_Keel_Page.html">
+                        <img src = "./Sample_Photos/Photographers ID Photos/${result.portrait}" alt =${result.name} id =${result.name}>
+                        <h2>${result.name}</h2>
+                    </a>
+                    <p class = "localisation">${result.city}</p>
+                    <p>${result.tagline}</p>
+                    <p class = "tarif">${result.price}€</p>
+                    <nav>
+                        <ul>
+                            <li>${result.tags}</li>
+                        </ul>
+                    </nav>
+                </div>
+                `
+            )
+            containerFichesPhotograhes.innerHTML = listOfPhotographersFilter;
         })
     })
 })
 
+//////////////////////////////Regarder cours oc js pour le web////////////////////////////
 
 /*
 //intégration photos des pages photographes
@@ -72,9 +118,10 @@ fetch("script.json")
     dataMedia.forEach(e=>{
         if (dataMedia.photographerId = 243){  
             let newImages = document.createElement("img");
-            newImages.src = "Sample_Photos/Mimi".concat(imageAddress);
+            newImages.src = "Sample_Photos/Mimi/".concat(imageAddress);
             
         }
     })
 })
+
 */
