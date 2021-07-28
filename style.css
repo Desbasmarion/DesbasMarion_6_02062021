@@ -166,7 +166,7 @@ h1 {
   padding: 0.2em;
 }
 
-.button_contact, .button_contact_mimi, .button_contact_ellie {
+.button_contact {
   width: 13%;
   background-color: #901C1C;
   color: white;
@@ -177,14 +177,6 @@ h1 {
   left: 410px;
   padding: 1%;
   height: 60px;
-}
-
-.button_contact_mimi {
-  left: 350px;
-}
-
-.button_contact_ellie {
-  left: 500px;
 }
 
 .localisation {
@@ -265,7 +257,7 @@ h1 {
   .header_photographe li {
     font-size: 13px;
   }
-  .header_photographe .button_contact, .header_photographe .button_contact_ellie, .header_photographe .button_contact_mimi {
+  .header_photographe .button_contact {
     display: none;
   }
 }/*# sourceMappingURL=style.css.map */

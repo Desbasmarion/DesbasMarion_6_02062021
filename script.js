@@ -43,7 +43,7 @@ let tabsJson = fetch ("script.json")
     dataPhotographers.forEach(fiche => 
         listOfPhotographers += `
             <div class = "fiche_photographe">
-                <a href = "Mimi_Keel_Page.html">
+                <a href ="page_photographe.html" class="lien">
                     <img src = "./Sample_Photos/Photographers ID Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
                     <h2>${fiche.name}</h2>
                 </a>
@@ -77,7 +77,7 @@ let tabsJson = fetch ("script.json")
             resultFilter.forEach(result => 
                 listOfPhotographersFilter += `
                 <div class = "fiche_photographe">
-                    <a href = "Mimi_Keel_Page.html">
+                    <a href="page_photographe.html" class="lien">
                         <img src = "./Sample_Photos/Photographers ID Photos/${result.portrait}" alt =${result.name} id =${result.name}>
                         <h2>${result.name}</h2>
                     </a>
@@ -95,33 +95,16 @@ let tabsJson = fetch ("script.json")
             containerFichesPhotograhes.innerHTML = listOfPhotographersFilter;
         })
     })
+
 })
+
+allFichePhotographeIndividuelle.forEach( item => {
+    item.addEventListener("click", e => {
+        window.location.href = window.location.href + "Mimi_Keel_Page.html"}
+        )
+})
+let lienPhotographe = /* à completer pour injecter la valeur dans innerHTML*/ "";
+
+
 
 //////////////////////////////Regarder cours oc js pour le web////////////////////////////
-
-/*
-//intégration photos des pages photographes
-let containerPhotos = document.querySelector("#photosMimi")
-
-fetch("script.json")
-.then(response => response.json())
-.then (data => {
-    let dataMedia = data.media;
-    let dataMimi = function(){
-        if (dataMedia.photographerId = 243){
-            return data
-        }
-    }
-
-    let imageAddress = data.media.map(img => img.image)
-    
-    dataMedia.forEach(e=>{
-        if (dataMedia.photographerId = 243){  
-            let newImages = document.createElement("img");
-            newImages.src = "Sample_Photos/Mimi/".concat(imageAddress);
-            
-        }
-    })
-})
-
-*/

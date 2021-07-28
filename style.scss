@@ -158,7 +158,7 @@ h1{
         padding: 0.2em;
     }
 }
-.button_contact, .button_contact_mimi, .button_contact_ellie{
+.button_contact{
     width: 13%;
     background-color: #901C1C;
     color: white;
@@ -170,12 +170,7 @@ h1{
     padding: 1%;
     height: 60px;
 }
-.button_contact_mimi{
-    left: 350px;
-}
-.button_contact_ellie{
-    left: 500px;
-}
+
 .localisation{
     color: #901C1C;
     font-size: 24px;
@@ -248,7 +243,7 @@ h1{
         li{
             font-size: 13px;
         }
-        .button_contact, .button_contact_ellie, .button_contact_mimi{
+        .button_contact{
             display: none;
         }
 
