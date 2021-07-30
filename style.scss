@@ -179,6 +179,23 @@ h1{
     font-weight: 400;
     margin: 0;
 }
+#medias_photographe{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.bloc_photo{
+    width: 30%;
+    height: 400px;
+}
+#heart{
+    cursor: pointer;
+}
+.visuel_media{
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+}
 
 //Responsive mobile index
 @media screen and (max-width: 426px) {

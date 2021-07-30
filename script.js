@@ -24,7 +24,7 @@ let tabsJson = fetch ("script.json")
         listOfPhotographers = document.createElement('div');
         listOfPhotographers.classList.add('fiche_photographe');
         listOfPhotographers.innerHTML += `
-                <a href ="page_photographe.html" class="lien">
+                <a href ="page_photographe.html?id=${fiche.id}" class="lien">
                     <img src = "./Sample_Photos/Photographers ID Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
                     <h2>${fiche.name}</h2>
                 </a>
@@ -62,7 +62,7 @@ let tabsJson = fetch ("script.json")
                         return false;
                     }
                 })
-                console.log(resultFilter);
+                
                 containerFichesPhotograhes.innerHTML ="";
                 listOfPhotographers.innerHTML ="";
 
@@ -70,7 +70,7 @@ let tabsJson = fetch ("script.json")
                     listOfPhotographers = document.createElement('div');
                     listOfPhotographers.classList.add('fiche_photographe');
                     listOfPhotographers.innerHTML += `
-                        <a href ="page_photographe.html" class="lien">
+                        <a href ="page_photographe.html?id=${result.id}" class="lien">
                             <img src = "./Sample_Photos/Photographers ID Photos/${result.portrait}" alt =${result.name} id =${result.name}>
                             <h2>${result.name}</h2>
                         </a>
@@ -89,7 +89,8 @@ let tabsJson = fetch ("script.json")
                         ulTagsFilter.append(spanTag);
                         listOfPhotographers.append(ulTagsFilter);
                     })
-                    containerFichesPhotograhes.append(listOfPhotographers)
+                    
+                    containerFichesPhotograhes.append(listOfPhotographers);
                 })
              })
         })
@@ -97,4 +98,5 @@ let tabsJson = fetch ("script.json")
      
     //j'appelle ma fonction filtre()
     filtre();
+    
 })
