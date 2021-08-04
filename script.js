@@ -13,13 +13,10 @@ let tabsJson = fetch ("script.json")
     let dataPhotographers = data.photographers;
     let dataMedia = data.media;
 
-    //je concatène les 2 tableaux pour pouvoir les filtrer 
-    let tabPhotographers = dataPhotographers.concat(dataMedia);
-
-    //je créer dynamiquement fiches photographes
+    //je crée dynamiquement fiches photographes
     let listOfPhotographers = "";
 
-    //je créer div globale pour chaque fiche photographe avec ses données
+    //je crée div globale pour chaque fiche photographe avec ses données
     dataPhotographers.forEach(fiche =>{
         listOfPhotographers = document.createElement('div');
         listOfPhotographers.classList.add('fiche_photographe');
@@ -33,7 +30,7 @@ let tabsJson = fetch ("script.json")
                 <p class = "tarif">${fiche.price}€</p>
         `
 
-        //je créer un span pour chaque tags
+        //je crée un span pour chaque tags
         let ulTags = document.createElement('ul');
         
         fiche.tags.forEach( tag => {
@@ -47,7 +44,7 @@ let tabsJson = fetch ("script.json")
         containerFichesPhotograhes.append(listOfPhotographers);
     });
     
-    //je filtre mon nouveau tableau de photographes quand un button est cliqué, avec boucle 
+    //je filtre mon nouveau tableau de photographes quand un tag est selectionné, avec boucle 
     
     let allTags = document.getElementsByClassName('hashtag');
     let arrayAllTags = Array.from(allTags);
