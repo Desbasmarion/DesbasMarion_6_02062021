@@ -226,6 +226,33 @@ form {
   margin-left: auto;
   margin-right: auto;
   padding: 2%;
+  width: 35%;
+  border-radius: 5px;
+}
+form input, form textarea {
+  border-radius: 5px;
+  border: none;
+  width: 95%;
+  height: 35px;
+  margin-top: 1%;
+}
+form textarea {
+  height: auto;
+}
+form label {
+  font-size: 20px;
+}
+form button {
+  background-color: #901C1C;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  height: 40px;
+}
+form button:active {
+  box-shadow: inset 0 0px 5px 5px #D3573C;
 }
 
 #dialog {
@@ -242,6 +269,13 @@ form {
 
 .buttonClose {
   cursor: pointer;
+  background-color: #DB8876;
+  color: white;
+  border: none;
+  font-size: 20px;
+  position: relative;
+  left: 65%;
+  top: 50px;
 }
 
 @media screen and (max-width: 426px) {

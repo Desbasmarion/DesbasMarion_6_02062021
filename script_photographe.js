@@ -83,16 +83,103 @@ fetch("script.json")
     */
 })
 
-//Fonctionnalités pour modale 
+//////Fonctionnalités pour modale///////
+
+//Elements Form
+let formModal = document.querySelector('form')
 let buttonContact = document.querySelector('.button_contact');
 let modal = document.querySelector('#dialog');
 let buttonClose = document.querySelector('.buttonClose');
+let buttonSend = document.querySelector('.btnEnvoi');
+let firstName = document.querySelector('#firstName');
+let lastName = document.querySelector('#lastName');
+let email = document.querySelector('#email');
+let texteareaForm = document.querySelector('#message');
+let arrayChampsForm = [firstName, lastName, email, texteareaForm];
+
+//Error Message
+let errorFirst = document.querySelector('.errorFirst');
+let errorLast = document.querySelector('.errorLast');
+let errorMail = document.querySelector('.errorMail');
+let errorMessage = document.querySelector('.errorMessage');
+let arrayErrorMessage = [errorFirst, errorLast, errorMail, errorMessage];
+
 
 //Ouverture modale
 buttonContact.addEventListener('click', e => modal.style.display = "block");
 
 //Fermeture modale
 buttonClose.addEventListener('click', e => modal.style.display = "none");
+
+//Regex
+const regexName = /^[a-zA-Z-\s]{2,}$/;
+const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-_]+$/;
+
+//Controle champs de la modale 
+buttonSend.addEventListener('click', e => {
+    e.preventDefault();
+    if(firstName.value == ""){
+        errorFirst.textContent = "prénom manquant";
+        errorFirst.style.fontStyle = "italic";
+    }else if (regexName.test(firstName.value) == false){
+        errorFirst.textContent = "syntaxe incorrecte";
+        errorFirst.style.fontStyle = "italic";
+    }else{
+        errorFirst.textContent = "";
+    }
+    if(lastName.value == ""){
+        errorLast.textContent = "nom manquant";
+        errorLast.style.fontStyle = "italic";
+    }else if (regexName.test(lastName.value) == false){
+        errorLast.textContent = "syntaxe incorrecte";
+        errorLast.style.fontStyle = "italic";
+    }else{
+       errorLast.textContent = "";
+    }
+    if(email.value == ""){
+        errorMail.textContent = "adresse mail manquante";
+        errorMail.style.fontStyle = "italic";
+    }else if (regexEmail.test(email.value) == false){
+        errorMail.textContent = "syntaxe incorrecte";
+        errorMail.style.fontStyle = "italic";
+    }else{
+        errorMail.textContent = "";
+    }
+    if(texteareaForm.value == ""){
+        errorMessage.textContent = "Veuillez renseigner votre message";
+        errorMessage.style.fontStyle = "italic";
+    }else{
+        errorMessage.textContent ="";
+    }
+
+    if (!firstName.value == "" && !lastName.value == "" && !email.value == "" && regexName.test(firstName.value) == true && regexName.test(lastName.value) == true && regexEmail.test(email.value) == true && !texteareaForm.value == ""){
+        formModal.textContent = "Votre message a bien été envoyé";
+        formModal.style.fontSize = "20px";
+        formModal.style.color = "white";
+    }
+});
+
+
+
+//ESSAI BOUCLE VERIFICATION CHAMPS
+//arrayChampsForm.forEach(item =>{
+    //     if (item.value == ""){
+    //         arrayErrorMessage.forEach(error => error.innerHTML = item.id + " manquant")
+    //             //ERREUR > Ne retiens que id de message, dernier element vérifié         
+    //     } else if(regexName.test(item.value) == false){
+    //         arrayErrorMessage.forEach(error => error.innerHTML = "syntaxe incorrecte");
+    //     } else{
+    //        formModal.textContent = "OK";
+    //        return true
+    //     }
+    // })
+    
+    
+  
+
+/////////Trouver solution pour ne pas répéter code et faire pareil pour autres champs////
+    
+
 
 
 
