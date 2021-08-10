@@ -53,8 +53,10 @@ let tabsJson = fetch ("script.json")
     
     const alltags = document.querySelectorAll(".hashtag");
         console.log(alltags);
-        let arrayTagsFilter = [];
-        alltags.forEach((btn) => btn.addEventListenner('click',function(){
+
+    let arrayTagsFilter = [];
+    
+    alltags.forEach((btn) => btn.addEventListenner('click',function(){
         console.log(btn);
     // if(!arrayTagsFilter.includes(tag.dataset.tag)){
     //     arrayTagsFilter.push(tag.dataset.tag);
