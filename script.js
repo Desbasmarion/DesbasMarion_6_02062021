@@ -49,28 +49,42 @@ let tabsJson = fetch ("script.json")
     createPhotographer(dataPhotographers);
     
     //je filtre mon nouveau tableau de photographes quand un tag est selectionné, avec boucle 
-    let allTags = document.getElementsByClassName('hashtag');
-    let arrayAllTags = Array.from(allTags);
+    
+    
+    const alltags = document.querySelectorAll(".hashtag");
+        console.log(alltags);
+        let arrayTagsFilter = [];
+        alltags.forEach((btn) => btn.addEventListenner('click',function(){
+        console.log(btn);
+    // if(!arrayTagsFilter.includes(tag.dataset.tag)){
+    //     arrayTagsFilter.push(tag.dataset.tag);
+    // }
+    // filter();
+}));
 
-    let arrayTagsFilter = [];
-    let resultFilter = [];
+    
+    // let arrayTagsFilter = [];
+    // let resultFilter = [];
     
     
     
     //pour chaque tags séléctionnés, j'appelle ma fonction filtre
-    arrayAllTags.forEach(tag => {
-        tag.addEventListener('click', e =>{
+    // alltags.forEach(tag => {
+    //     tag.addEventListener('click', e =>{
 
-            arrayTagsFilter.push(tag.dataset.tag); 
+    //         arrayTagsFilter.push(tag.dataset.tag); 
 
-            arrayTagsFilter.forEach(tag => {
-                resultFilter = dataPhotographers.filter(photographe => photographe.tags.includes(tag)) 
-            })
+    //         arrayTagsFilter.forEach(tag => {
+    //             resultFilter = dataPhotographers.filter(photographe => photographe.tags.includes(tag)) 
+    //         })
 
-            containerFichesPhotograhes.innerHTML = "";
-            createPhotographer(resultFilter)
-        })  
-    });  
+    //         containerFichesPhotograhes.innerHTML = "";
+    //         createPhotographer(resultFilter)
+        
+            
+
+    //     }) 
+    // });  
     
     
 })
