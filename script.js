@@ -17,83 +17,60 @@ let tabsJson = fetch ("script.json")
     let listOfPhotographers = "";
 
     //je crée div globale pour chaque fiche photographe avec ses données
-    dataPhotographers.forEach(fiche =>{
-        listOfPhotographers = document.createElement('div');
-        listOfPhotographers.classList.add('fiche_photographe');
-        listOfPhotographers.innerHTML += `
-                <a href ="page_photographe.html?id=${fiche.id}" class="lien">
-                    <img src = "./Sample_Photos/Photographers ID Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
-                    <h2>${fiche.name}</h2>
-                </a>
-                <p class = "localisation">${fiche.city}, ${fiche.country}</p>
-                <p>${fiche.tagline}</p>
-                <p class = "tarif">${fiche.price}€</p>
-        `
+    function createPhotographer(dataPhotographers){
+        dataPhotographers.forEach(fiche =>{
+            listOfPhotographers = document.createElement('div');
+            listOfPhotographers.classList.add('fiche_photographe');
+            listOfPhotographers.innerHTML += `
+                    <a href ="page_photographe.html?id=${fiche.id}" class="lien">
+                        <img src = "./Sample_Photos/Photographers ID Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
+                        <h2>${fiche.name}</h2>
+                    </a>
+                    <p class = "localisation">${fiche.city}, ${fiche.country}</p>
+                    <p>${fiche.tagline}</p>
+                    <p class = "tarif">${fiche.price}€</p>
+            `
+    
+            //je crée un span pour chaque tags
+            let ulTags = document.createElement('ul');
+            
+            fiche.tags.forEach( tag => {
+                let spanTag = document.createElement('span');
+                spanTag.classList.add('hashtag');
+                spanTag.innerHTML += `#${tag}`;
+                ulTags.append(spanTag);
+                listOfPhotographers.append(ulTags);
+            })
+            containerFichesPhotograhes.append(listOfPhotographers);
+        });
+    }
 
-        //je crée un span pour chaque tags
-        let ulTags = document.createElement('ul');
-        
-        fiche.tags.forEach( tag => {
-            let spanTag = document.createElement('span');
-            spanTag.classList.add('hashtag');
-            spanTag.setAttribute('data-tag', `${tag}`);
-            spanTag.innerHTML += `#${tag}`;
-            ulTags.append(spanTag);
-            listOfPhotographers.append(ulTags);
-        })
-        containerFichesPhotograhes.append(listOfPhotographers);
-    });
+    //J'appelle ma fonction pour créer les fiches photographes
+    createPhotographer(dataPhotographers);
     
     //je filtre mon nouveau tableau de photographes quand un tag est selectionné, avec boucle 
-    
     let allTags = document.getElementsByClassName('hashtag');
     let arrayAllTags = Array.from(allTags);
 
-    function filtre(){
-        arrayAllTags.forEach(item => {
-            item.addEventListener('click', e => {
-                let resultFilter = dataPhotographers.filter(photographe => {
-                    if( photographe.tags.includes(item.dataset.tag)){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                })
-                
-                containerFichesPhotograhes.innerHTML ="";
-                listOfPhotographers.innerHTML ="";
+    let arrayTagsFilter = [];
+    let resultFilter = [];
+    
+    
+    
+    //pour chaque tags séléctionnés, j'appelle ma fonction filtre
+    arrayAllTags.forEach(tag => {
+        tag.addEventListener('click', e =>{
 
-                resultFilter.forEach(result => { 
-                    listOfPhotographers = document.createElement('div');
-                    listOfPhotographers.classList.add('fiche_photographe');
-                    listOfPhotographers.innerHTML += `
-                        <a href ="page_photographe.html?id=${result.id}" class="lien">
-                            <img src = "./Sample_Photos/Photographers ID Photos/${result.portrait}" alt =${result.name} id =${result.name}>
-                            <h2>${result.name}</h2>
-                        </a>
-                        <p class = "localisation">${result.city}, ${result.country}</p>
-                        <p>${result.tagline}</p>
-                        <p class = "tarif">${result.price}€</p>
-                    `
+            arrayTagsFilter.push(tag.dataset.tag); 
 
-                    let ulTagsFilter = document.createElement('ul');
-        
-                    result.tags.forEach( tag => {
-                        let spanTag = document.createElement('span');
-                        spanTag.classList.add('hashtag');
-                        spanTag.setAttribute('data-tag', `${tag}`);
-                        spanTag.innerHTML += `#${tag}`;
-                        ulTagsFilter.append(spanTag);
-                        listOfPhotographers.append(ulTagsFilter);
-                    })
-                    
-                    containerFichesPhotograhes.append(listOfPhotographers);
-                })
-             })
-        })
-    }
-     
-    //j'appelle ma fonction filtre()
-    filtre();
+            arrayTagsFilter.forEach(tag => {
+                resultFilter = dataPhotographers.filter(photographe => photographe.tags.includes(tag)) 
+            })
+
+            containerFichesPhotograhes.innerHTML = "";
+            createPhotographer(resultFilter)
+        })  
+    });  
+    
     
 })
