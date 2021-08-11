@@ -7,7 +7,7 @@ let htmlContainerMedia = "";
 
 let paramID = window.location.search.split("=")[1];
 
-fetch("script.json")
+fetch("../js/script.json")
 .then(response => response.json())
 .then(data => {
 
@@ -24,7 +24,7 @@ fetch("script.json")
                 <h1 class="nom_photographe">${item.name}</h1>
                 <p class="localisation">${item.city}, ${item.country}</p>
                 <p class="tagline">${item.tagline}</p>
-                <img src="./Sample_Photos/Photographers ID Photos/${item.portrait}" class="profil_photographe">
+                <img src="../Sample_Photos/Photographers_ID_Photos/${item.portrait}" class="profil_photographe">
                 `    
                 
             let ulTags = document.createElement('ul');
@@ -46,7 +46,7 @@ fetch("script.json")
         if(item.photographerId == paramID){
             htmlContainerMedia += `
                 <div class="bloc_photo">
-                    <img src="./Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
+                    <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
                     <h2 class="titre_media">${item.title}</h2>
                     <p class="nombre_likes">${item.likes}</p>
                     <i class="fas fa-heart"></i>

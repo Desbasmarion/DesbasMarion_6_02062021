@@ -6,7 +6,7 @@ let arrayFichePhotographe = Array.from(allFichePhotographeIndividuelle);
 
 
 //Récupération tableaux JSON 
-let tabsJson = fetch ("script.json")
+let tabsJson = fetch("../js/script.json")
 .then((response) => response.json())
 .then(data => {
     //je récupère les 2 tableaux 
@@ -15,7 +15,7 @@ let tabsJson = fetch ("script.json")
 
     //je crée dynamiquement fiches photographes
     let listOfPhotographers = "";
-
+    
     //je crée div globale pour chaque fiche photographe avec ses données
     function createPhotographer(dataPhotographers){
         dataPhotographers.forEach(fiche =>{
@@ -23,7 +23,7 @@ let tabsJson = fetch ("script.json")
             listOfPhotographers.classList.add('fiche_photographe');
             listOfPhotographers.innerHTML += `
                     <a href ="page_photographe.html?id=${fiche.id}" class="lien">
-                        <img src = "./Sample_Photos/Photographers ID Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
+                        <img src = "../Sample_Photos/Photographers_ID_Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
                         <h2>${fiche.name}</h2>
                     </a>
                     <p class = "localisation">${fiche.city}, ${fiche.country}</p>
@@ -49,15 +49,10 @@ let tabsJson = fetch ("script.json")
     createPhotographer(dataPhotographers);
     
     //je filtre mon nouveau tableau de photographes quand un tag est selectionné, avec boucle 
-    
-    
     const alltags = document.querySelectorAll(".hashtag");
 
-    
     let arrayTagsFilter = [];
     let resultFilter = [];
-    
-    
     
     //pour chaque tags séléctionnés, j'appelle ma fonction filtre
     alltags.forEach(tag => {
