@@ -52,41 +52,28 @@ let tabsJson = fetch ("script.json")
     
     
     const alltags = document.querySelectorAll(".hashtag");
-        console.log(alltags);
 
+    
     let arrayTagsFilter = [];
-    
-    alltags.forEach((btn) => btn.addEventListenner('click',function(){
-        console.log(btn);
-    // if(!arrayTagsFilter.includes(tag.dataset.tag)){
-    //     arrayTagsFilter.push(tag.dataset.tag);
-    // }
-    // filter();
-}));
-
-    
-    // let arrayTagsFilter = [];
-    // let resultFilter = [];
+    let resultFilter = [];
     
     
     
     //pour chaque tags séléctionnés, j'appelle ma fonction filtre
-    // alltags.forEach(tag => {
-    //     tag.addEventListener('click', e =>{
+    alltags.forEach(tag => {
+        tag.addEventListener('click', e =>{
 
-    //         arrayTagsFilter.push(tag.dataset.tag); 
+            arrayTagsFilter.push(tag.dataset.tag); 
 
-    //         arrayTagsFilter.forEach(tag => {
-    //             resultFilter = dataPhotographers.filter(photographe => photographe.tags.includes(tag)) 
-    //         })
+            arrayTagsFilter.forEach(tag => {
+                resultFilter = dataPhotographers.filter(photographe => photographe.tags.includes(tag)) 
+            })
 
-    //         containerFichesPhotograhes.innerHTML = "";
-    //         createPhotographer(resultFilter)
-        
-            
+            containerFichesPhotograhes.innerHTML = "";
+            createPhotographer(resultFilter)
 
-    //     }) 
-    // });  
+        }) 
+    });  
     
     
 })
