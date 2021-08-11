@@ -115,69 +115,37 @@ buttonClose.addEventListener('click', e => modal.style.display = "none");
 const regexName = /^[a-zA-Z-\s]{2,}$/;
 const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-_]+$/;
 
-//Controle champs de la modale 
+//Vérification des champs du formulaire 
 buttonSend.addEventListener('click', e => {
     e.preventDefault();
-    if(firstName.value == ""){
-        errorFirst.textContent = "prénom manquant";
-        errorFirst.style.fontStyle = "italic";
-    }else if (regexName.test(firstName.value) == false){
-        errorFirst.textContent = "syntaxe incorrecte";
-        errorFirst.style.fontStyle = "italic";
-    }else{
-        errorFirst.textContent = "";
-    }
-    if(lastName.value == ""){
-        errorLast.textContent = "nom manquant";
-        errorLast.style.fontStyle = "italic";
-    }else if (regexName.test(lastName.value) == false){
-        errorLast.textContent = "syntaxe incorrecte";
-        errorLast.style.fontStyle = "italic";
-    }else{
-       errorLast.textContent = "";
-    }
-    if(email.value == ""){
-        errorMail.textContent = "adresse mail manquante";
-        errorMail.style.fontStyle = "italic";
-    }else if (regexEmail.test(email.value) == false){
-        errorMail.textContent = "syntaxe incorrecte";
-        errorMail.style.fontStyle = "italic";
-    }else{
-        errorMail.textContent = "";
-    }
-    if(texteareaForm.value == ""){
-        errorMessage.textContent = "Veuillez renseigner votre message";
-        errorMessage.style.fontStyle = "italic";
-    }else{
-        errorMessage.textContent ="";
-    }
+
+    validateForm(firstName, errorFirst, regexName);
+    validateForm(lastName, errorLast, regexName);
+    validateForm(email, errorMail, regexEmail);
 
     if (!firstName.value == "" && !lastName.value == "" && !email.value == "" && regexName.test(firstName.value) == true && regexName.test(lastName.value) == true && regexEmail.test(email.value) == true && !texteareaForm.value == ""){
+        console.log(firstName.value, lastName.value, email.value);
         formModal.textContent = "Votre message a bien été envoyé";
         formModal.style.fontSize = "20px";
         formModal.style.color = "white";
     }
 });
 
+//Fonction de vérification du formulaire 
+function validateForm(firstName, errorFirst, regexName){
+    if(firstName.value == ""){
+        errorFirst.textContent = "champs obligatoire";
+        errorFirst.style.fontStyle = "italic";
+    }else if (regexName.test(firstName.value) == false){
+        errorFirst.textContent = "syntaxe incorrecte";
+        errorFirst.style.fontStyle = "italic";
+    }else{
+        errorFirst.textContent = "";
+        return true;
+    }
+}
 
 
-//ESSAI BOUCLE VERIFICATION CHAMPS
-//arrayChampsForm.forEach(item =>{
-    //     if (item.value == ""){
-    //         arrayErrorMessage.forEach(error => error.innerHTML = item.id + " manquant")
-    //             //ERREUR > Ne retiens que id de message, dernier element vérifié         
-    //     } else if(regexName.test(item.value) == false){
-    //         arrayErrorMessage.forEach(error => error.innerHTML = "syntaxe incorrecte");
-    //     } else{
-    //        formModal.textContent = "OK";
-    //        return true
-    //     }
-    // })
-    
-    
-  
-
-/////////Trouver solution pour ne pas répéter code et faire pareil pour autres champs////
     
 
 

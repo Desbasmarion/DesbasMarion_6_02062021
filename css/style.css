@@ -72,6 +72,7 @@ h1 {
   height: 224px;
   -o-object-fit: cover;
      object-fit: cover;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
 }
 .fiche_photographe a > h2 {
   color: #D3573C;
