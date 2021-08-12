@@ -53,22 +53,45 @@ let tabsJson = fetch("../js/script.json")
 
     let arrayTagsFilter = [];
     let resultFilter = [];
-    
-    //pour chaque tags séléctionnés, j'appelle ma fonction filtre
+
+    //pour chaque tags séléctionnés, je renvoie les photographes qui ont les tags correspondant
     alltags.forEach(tag => {
+        
         tag.addEventListener('click', e =>{
 
-            arrayTagsFilter.push(tag.dataset.tag); 
+            //Mise en évidence du tag séléctionné 
+            tag.style. backgroundColor = "#901C1C";
+            tag.style.color = "white";
 
-            arrayTagsFilter.forEach(tag => {
-                resultFilter = dataPhotographers.filter(photographe => photographe.tags.includes(tag)) 
-            })
-
+            //Je stock le tag séléctionné dans un array + traitement du cas de la désélection 
+            if(arrayTagsFilter.indexOf(tag.dataset.tag) === -1){
+                arrayTagsFilter.push(tag.dataset.tag)
+            }else{
+                tag.style. backgroundColor = "white";
+                tag.style.color = "#901C1C";
+                arrayTagsFilter.pop();
+            }
+           
+            //Je filtre les photographes en fonction des tags séléctionnés 
+            resultFilter = dataPhotographers.filter(photographer =>
+                arrayTagsFilter.every(tag => photographer.tags.includes(tag))
+            );
+            
+            //J'affiche le résultat du filtre
             containerFichesPhotograhes.innerHTML = "";
             createPhotographer(resultFilter)
 
-        }) 
-    });  
-    
+            //Si aucun résultat trouvé, le spécifier à l'utilisateur 
+            if(resultFilter.length == 0){
+                containerFichesPhotograhes.innerHTML = "Aucun résultat trouvé";
+            }
+        })
+        
+    });
     
 })
+
+
+
+
+
