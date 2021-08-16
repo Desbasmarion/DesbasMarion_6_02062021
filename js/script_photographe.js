@@ -43,10 +43,19 @@ fetch("../js/script.json")
     })
     
     media.forEach( item => {
-        if(item.photographerId == paramID){
+        if(item.photographerId == paramID && item.image){
             htmlContainerMedia += `
                 <div class="bloc_photo">
                     <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
+                    <h2 class="titre_media">${item.title}</h2>
+                    <p class="nombre_likes">${item.likes}</p>
+                    <i class="fas fa-heart"></i>
+                </div>
+            `
+        }else if(item.photographerId == paramID && item.video){
+            htmlContainerMedia += `
+                <div class="bloc_photo">
+                    <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
                     <h2 class="titre_media">${item.title}</h2>
                     <p class="nombre_likes">${item.likes}</p>
                     <i class="fas fa-heart"></i>
@@ -57,16 +66,9 @@ fetch("../js/script.json")
 
     containerMedia.innerHTML = htmlContainerMedia;
 
-    //je récupère éléments js du DOM
-    let nomPhotographe = document.querySelectorAll(".nom_photographe");
-    let localisation = document.querySelectorAll(".localisation");
-    let tagline = document.querySelectorAll(".tagline");
-    let tagPhotographe = document.querySelectorAll(".tag_photographe");
-    let photoProfil = document.querySelectorAll(".profil_photographe");
-    let visuelMedia = document.querySelectorAll(".visuel_media");
-    let titreMedia = document.querySelectorAll(".titre_media");
-    let nombreLikes = document.querySelectorAll(".nombre_likes");
-    let iconHeart = document.querySelectorAll('.fa-heart');
+    
+    //Test factory method
+   
 
     /*fonction incrementation
     //Incrémentation likes 
