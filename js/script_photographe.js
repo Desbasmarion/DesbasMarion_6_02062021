@@ -26,7 +26,7 @@ fetch("../js/script.json")
                 <p class="tagline">${item.tagline}</p>
                 <img src="../Sample_Photos/Photographers_ID_Photos/${item.portrait}" class="profil_photographe">
                 `    
-                
+            
             let ulTags = document.createElement('ul');
 
             item.tags.forEach(tag => {
@@ -42,28 +42,7 @@ fetch("../js/script.json")
         }
     })
     
-    // media.forEach( item => {
-    //     if(item.photographerId == paramID && item.image){
-    //         htmlContainerMedia += `
-    //             <div class="bloc_photo">
-    //                 <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
-    //                 <h2 class="titre_media">${item.title}</h2>
-    //                 <p class="nombre_likes">${item.likes}</p>
-    //                 <i class="fas fa-heart"></i>
-    //             </div>
-    //         `
-    //     }else if(item.photographerId == paramID && item.video){
-    //         htmlContainerMedia += `
-    //             <div class="bloc_photo">
-    //                 <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
-    //                 <h2 class="titre_media">${item.title}</h2>
-    //                 <p class="nombre_likes">${item.likes}</p>
-    //                 <i class="fas fa-heart"></i>
-    //             </div>
-    //         `
-    //     }
-    // })
-
+    //Test factory method
     media.forEach( item => {
         function createImage(){
             htmlContainerMedia += `
@@ -100,24 +79,14 @@ fetch("../js/script.json")
 
     containerMedia.innerHTML = htmlContainerMedia;
 
+    //Incrémentation nombre likes
+    let nombreLikes = document.getElementsByClassName('nombre_likes');
+    let iconHeart = document.getElementsByClassName('fas fa-heart');
 
-    
-    //Test factory method
-   
+    for(i=0; i<nombreLikes.length;i++){
+        iconHeart.forEach(icon => console.log(icon));
+    }
 
-    /*fonction incrementation
-    //Incrémentation likes 
-    nombreLikes.forEach(item => {
-        iconHeart.forEach(icon => {
-            icon.addEventListener('click', e => {
-                let resultLikes = 0;
-                resultLikes++;
-                item.innerHTML = resultLikes;
-            })
-        })
-
-    })
-    */
 })
 
 //////Fonctionnalités pour modale///////
@@ -140,7 +109,6 @@ let errorLast = document.querySelector('.errorLast');
 let errorMail = document.querySelector('.errorMail');
 let errorMessage = document.querySelector('.errorMessage');
 let arrayErrorMessage = [errorFirst, errorLast, errorMail, errorMessage];
-
 
 //Ouverture modale
 buttonContact.addEventListener('click', e => modal.style.display = "block");
@@ -183,7 +151,11 @@ function validateForm(firstName, errorFirst, regexName){
 }
 
 
-    
+
+
+
+
+
 
 
 
