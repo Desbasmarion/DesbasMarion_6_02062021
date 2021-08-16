@@ -56,7 +56,6 @@ let tabsJson = fetch("../js/script.json")
 
     //pour chaque tags séléctionnés, je renvoie les photographes qui ont les tags correspondant
     alltags.forEach(tag => {
-        
         tag.addEventListener('click', e =>{
 
             //Mise en évidence du tag séléctionné 
