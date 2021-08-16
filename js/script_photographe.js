@@ -42,8 +42,30 @@ fetch("../js/script.json")
         }
     })
     
+    // media.forEach( item => {
+    //     if(item.photographerId == paramID && item.image){
+    //         htmlContainerMedia += `
+    //             <div class="bloc_photo">
+    //                 <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
+    //                 <h2 class="titre_media">${item.title}</h2>
+    //                 <p class="nombre_likes">${item.likes}</p>
+    //                 <i class="fas fa-heart"></i>
+    //             </div>
+    //         `
+    //     }else if(item.photographerId == paramID && item.video){
+    //         htmlContainerMedia += `
+    //             <div class="bloc_photo">
+    //                 <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
+    //                 <h2 class="titre_media">${item.title}</h2>
+    //                 <p class="nombre_likes">${item.likes}</p>
+    //                 <i class="fas fa-heart"></i>
+    //             </div>
+    //         `
+    //     }
+    // })
+
     media.forEach( item => {
-        if(item.photographerId == paramID && item.image){
+        function createImage(){
             htmlContainerMedia += `
                 <div class="bloc_photo">
                     <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
@@ -52,8 +74,10 @@ fetch("../js/script.json")
                     <i class="fas fa-heart"></i>
                 </div>
             `
-        }else if(item.photographerId == paramID && item.video){
-            htmlContainerMedia += `
+        }
+            
+        function createVideo(){
+             htmlContainerMedia += `
                 <div class="bloc_photo">
                     <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
                     <h2 class="titre_media">${item.title}</h2>
@@ -62,9 +86,20 @@ fetch("../js/script.json")
                 </div>
             `
         }
+
+        function mediaFactory(){
+            if(item.photographerId == paramID && item.image){
+                return createImage();
+            }else if(item.photographerId == paramID && item.video){
+                return createVideo();
+            }
+        }
+
+        mediaFactory();
     })
 
     containerMedia.innerHTML = htmlContainerMedia;
+
 
     
     //Test factory method
