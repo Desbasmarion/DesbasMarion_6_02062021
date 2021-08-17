@@ -60,7 +60,7 @@ fetch("../js/script.json")
                 <div class="bloc_photo">
                     <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
                     <h2 class="titre_media">${item.title}</h2>
-                    <p class="nombre_likes" data-id=${item.id}>${item.likes}</p>
+                    <p class="nombre_likes" data-id="${item.id}">${item.likes}</p>
                     <i class="fas fa-heart"></i>
                 </div>
             `
@@ -80,18 +80,32 @@ fetch("../js/script.json")
     containerMedia.innerHTML = htmlContainerMedia;
 
     //Incrémentation nombre likes
-    let nombreLikes = [document.getElementsByClassName('nombre_likes')];
+    let nombreLikes = document.getElementsByClassName('nombre_likes');
     let iconHeart = document.getElementsByClassName('fas fa-heart');
     let mediaId = [];
     let likesId = [];
 
+    //Je récupère l'id des médias
     media.forEach(media => {
         mediaId.push(media.id);
     })
     
-    nombreLikes.forEach(nombre => {
-        console.log(nombre);
+    //Je récupère le dataset équivalent à l'id média
+    for(i=0;i<nombreLikes.length;i++){
+       likesId.push(nombreLikes[i].dataset.id);
+    }
+   
+    //Au clic sur l'icone, je compare les id
+    for(i=0;i<iconHeart.length;i++){
+        iconHeart[i].addEventListener('click', e => {
+        if(mediaId.includes(777723343)){
+            console.log('ok');
+        }else{
+            console.log('ko');
+        }
     })
+    }
+   
 
    
 
