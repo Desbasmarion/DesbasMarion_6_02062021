@@ -49,7 +49,7 @@ fetch("../js/script.json")
                 <div class="bloc_photo">
                     <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
                     <h2 class="titre_media">${item.title}</h2>
-                    <p class="nombre_likes">${item.likes}</p>
+                    <p class="nombre_likes" data-id=${item.id}>${item.likes}</p>
                     <i class="fas fa-heart"></i>
                 </div>
             `
@@ -60,7 +60,7 @@ fetch("../js/script.json")
                 <div class="bloc_photo">
                     <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
                     <h2 class="titre_media">${item.title}</h2>
-                    <p class="nombre_likes">${item.likes}</p>
+                    <p class="nombre_likes" data-id=${item.id}>${item.likes}</p>
                     <i class="fas fa-heart"></i>
                 </div>
             `
@@ -80,14 +80,42 @@ fetch("../js/script.json")
     containerMedia.innerHTML = htmlContainerMedia;
 
     //Incrémentation nombre likes
-    let nombreLikes = document.getElementsByClassName('nombre_likes');
+    let nombreLikes = [document.getElementsByClassName('nombre_likes')];
     let iconHeart = document.getElementsByClassName('fas fa-heart');
+    let mediaId = [];
+    let likesId = [];
 
-    for(i=0; i<nombreLikes.length;i++){
-        iconHeart.forEach(icon => console.log(icon));
-    }
+    media.forEach(media => {
+        mediaId.push(media.id);
+    })
+    
+    nombreLikes.forEach(nombre => {
+        console.log(nombre);
+    })
 
+   
+
+    // for(i=0; i<iconHeart.length;i++){
+    //     iconHeart[i].addEventListener('click', e => {
+    //         for(i=0;i<media.length;i++){
+    //             for(i=0;i<nombreLikes.length;i++){
+    //                 if(media[i].id == nombreLikes[i].dataset.id){
+    //                     console.log('ok');
+    //                 }
+    //             }
+    //         }
+    //     })
+    // }
+    
+    
+    
+    
+    // for(i=0; i<nombreLikes.length;i++){
+    //     //     nombreLikes[i].textContent++;
+    //     // } 
 })
+
+
 
 //////Fonctionnalités pour modale///////
 
