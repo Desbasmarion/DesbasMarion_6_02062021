@@ -49,8 +49,8 @@ fetch("../js/script.json")
                 <div class="bloc_photo">
                     <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visuel_media">
                     <h2 class="titre_media">${item.title}</h2>
-                    <p class="nombre_likes" data-id=${item.id}>${item.likes}</p>
-                    <i class="fas fa-heart"></i>
+                    <p class="nombre_likes" data-media='${item.id}'>${item.likes}</p>
+                    <i class="fas fa-heart" data-media='${item.id}'></i>
                 </div>
             `
         }
@@ -60,8 +60,8 @@ fetch("../js/script.json")
                 <div class="bloc_photo">
                     <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visuel_media"></video>
                     <h2 class="titre_media">${item.title}</h2>
-                    <p class="nombre_likes" data-id="${item.id}">${item.likes}</p>
-                    <i class="fas fa-heart"></i>
+                    <p class="nombre_likes" data-media="${item.id}">${item.likes}</p>
+                    <i class="fas fa-heart" data-media='${item.id}'></i>
                 </div>
             `
         }
@@ -80,34 +80,27 @@ fetch("../js/script.json")
     containerMedia.innerHTML = htmlContainerMedia;
 
     //Incrémentation nombre likes
-    let nombreLikes = document.getElementsByClassName('nombre_likes');
-    let iconHeart = document.getElementsByClassName('fas fa-heart');
-    let mediaId = [];
-    let likesId = [];
-
-    //Je récupère l'id des médias
-    media.forEach(media => {
-        mediaId.push(media.id);
-    })
+    let numbersLikes = document.querySelectorAll('.nombre_likes');
+    let iconHeart = document.querySelectorAll('.fa-heart');
+    let iconHeartData = [];
+   
+    iconHeart.forEach(icon => {
+        icon.addEventListener('click', e => {
+            iconHeartData = icon.dataset.media;
+            numbersLikes.forEach(number =>{
+                if(number.dataset.media == iconHeartData){
+                    number.innerHTML++;
+                }
+            })
+        })
+    });
     
-    //Je récupère le dataset équivalent à l'id média
-    for(i=0;i<nombreLikes.length;i++){
-       likesId.push(nombreLikes[i].dataset.id);
-    }
-   
-    //Au clic sur l'icone, je compare les id
-    for(i=0;i<iconHeart.length;i++){
-        iconHeart[i].addEventListener('click', e => {
-        if(mediaId.includes(777723343)){
-            console.log('ok');
-        }else{
-            console.log('ko');
-        }
-    })
-    }
-   
+    
 
-   
+    
+    
+
+
 
     // for(i=0; i<iconHeart.length;i++){
     //     iconHeart[i].addEventListener('click', e => {
@@ -121,12 +114,6 @@ fetch("../js/script.json")
     //     })
     // }
     
-    
-    
-    
-    // for(i=0; i<nombreLikes.length;i++){
-    //     //     nombreLikes[i].textContent++;
-    //     // } 
 })
 
 
