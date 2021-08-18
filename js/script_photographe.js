@@ -86,10 +86,18 @@ fetch("../js/script.json")
    
     iconHeart.forEach(icon => {
         icon.addEventListener('click', e => {
-            iconHeartData = icon.dataset.media;
+            //je push l'icone cliquée dans mon tableau + traitement en cas de reclic
+            if(iconHeartData.indexOf(icon.dataset.media) === -1){
+                iconHeartData.push(icon.dataset.media)
+            }else{
+                iconHeartData.pop();
+            }
+            //J'incrémente le nombre de like au clic + limite à 1 like par média
             numbersLikes.forEach(number =>{
                 if(number.dataset.media == iconHeartData){
                     number.innerHTML++;
+                }else if (number.dataset.media == icon.dataset.media){
+                    number.innerHTML--;
                 }
             })
         })
