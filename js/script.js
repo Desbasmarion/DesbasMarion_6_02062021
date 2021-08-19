@@ -1,22 +1,19 @@
-/*Récupération des tags*/
 let containerFilesPhotograhers = document.getElementById('allFilesPhotographers');
 
 let allFilesPhotographer = document.querySelectorAll(".file_photographer");
 let arrayFilePhotographer = Array.from(allFilesPhotographer);
 
 
-//Récupération tableaux JSON 
+//Recovery JSON data
 let tabsJson = fetch("../js/script.json")
 .then((response) => response.json())
-.then(data => {
-    //je récupère les 2 tableaux 
+.then(data => { 
     let dataPhotographers = data.photographers;
-    let dataMedia = data.media;
 
-    //je crée dynamiquement files photographes
+    //Dynamics creation of photographers files
     let listOfPhotographers = "";
     
-    //je crée div globale pour chaque file photographe avec ses données
+    //Creation global div for each photographer file with his data
     function createPhotographer(dataPhotographers){
         dataPhotographers.forEach(file =>{
             listOfPhotographers = document.createElement('div');
@@ -31,7 +28,7 @@ let tabsJson = fetch("../js/script.json")
                     <p class = "rate">${file.price}€</p>
             `
     
-            //je crée un span pour chaque tags
+            //Creation span for each tag
             let ulTags = document.createElement('ul');
             
             file.tags.forEach( tag => {
@@ -45,24 +42,24 @@ let tabsJson = fetch("../js/script.json")
         });
     }
 
-    //J'appelle ma fonction pour créer les files photographes
+    //Call function for create photographers files
     createPhotographer(dataPhotographers);
     
-    //je filtre mon nouveau tableau de photographes quand un tag est selectionné, avec boucle 
+    //Filter new table of photographers when a tag was selected
     const alltags = document.querySelectorAll(".hashtag");
 
     let arrayTagsFilter = [];
     let resultFilter = [];
 
-    //pour chaque tags séléctionnés, je renvoie les photographes qui ont les tags correspondant
+    //For each tags selected, show photographers who get this tag
     alltags.forEach(tag => {
         tag.addEventListener('click', e =>{
 
-            //Mise en évidence du tag séléctionné 
+            //Layout tag selected 
             tag.style. backgroundColor = "#901C1C";
             tag.style.color = "white";
 
-            //Je stock le tag séléctionné dans un array + traitement du cas de la désélection 
+            //Stock tag selected in an array + Processing case of deselect
             if(arrayTagsFilter.indexOf(tag.dataset.tag) === -1){
                 arrayTagsFilter.push(tag.dataset.tag)
             }else{
@@ -71,16 +68,17 @@ let tabsJson = fetch("../js/script.json")
                 arrayTagsFilter.pop();
             }
            
-            //Je filtre les photographes en fonction des tags séléctionnés 
+            //Filter photographers according to tags selected
             resultFilter = dataPhotographers.filter(photographer =>
                 arrayTagsFilter.every(tag => photographer.tags.includes(tag))
             );
             
-            //J'affile le résultat du filtre
+            //Show result of filter
             containerFilesPhotograhers.innerHTML = "";
             createPhotographer(resultFilter)
 
             //Si aucun résultat trouvé, le spécifier à l'utilisateur 
+            //If no results found, tell the user
             if(resultFilter.length == 0){
                 containerFilesPhotograhers.innerHTML = "Aucun résultat trouvé";
             }

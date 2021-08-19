@@ -70,7 +70,7 @@ fetch("../js/script.json")
             if(item.photographerId == paramID && item.image){
                 return createImage();
             }else if(item.photographerId == paramID && item.video){
-                return createVideo();
+                return createVideo();   
             }
         }
 
@@ -137,6 +137,7 @@ fetch("../js/script.json")
 
             let mediaImage = document.createElement('img');
             let mediaVideo = document.createElement('video');
+            mediaVideo.setAttribute('controls', "");
 
             mediaImage.src = media.src;
             mediaVideo.src = media.src;
