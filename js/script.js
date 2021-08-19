@@ -1,8 +1,8 @@
 /*Récupération des tags*/
-let containerFichesPhotograhes = document.getElementById('allFichesPhotographers');
+let containerFilesPhotograhers = document.getElementById('allFilesPhotographers');
 
-let allFichePhotographeIndividuelle = document.querySelectorAll(".fiche_photographe");
-let arrayFichePhotographe = Array.from(allFichePhotographeIndividuelle);
+let allFilesPhotographer = document.querySelectorAll(".file_photographer");
+let arrayFilePhotographer = Array.from(allFilesPhotographer);
 
 
 //Récupération tableaux JSON 
@@ -13,39 +13,39 @@ let tabsJson = fetch("../js/script.json")
     let dataPhotographers = data.photographers;
     let dataMedia = data.media;
 
-    //je crée dynamiquement fiches photographes
+    //je crée dynamiquement files photographes
     let listOfPhotographers = "";
     
-    //je crée div globale pour chaque fiche photographe avec ses données
+    //je crée div globale pour chaque file photographe avec ses données
     function createPhotographer(dataPhotographers){
-        dataPhotographers.forEach(fiche =>{
+        dataPhotographers.forEach(file =>{
             listOfPhotographers = document.createElement('div');
-            listOfPhotographers.classList.add('fiche_photographe');
+            listOfPhotographers.classList.add('file_photographer');
             listOfPhotographers.innerHTML += `
-                    <a href ="page_photographe.html?id=${fiche.id}" class="lien">
-                        <img src = "../Sample_Photos/Photographers_ID_Photos/${fiche.portrait}" alt =${fiche.name} id =${fiche.name}>
-                        <h2>${fiche.name}</h2>
+                    <a href ="page_photographe.html?id=${file.id}" class="link">
+                        <img src = "../Sample_Photos/Photographers_ID_Photos/${file.portrait}" alt =${file.name} id =${file.name}>
+                        <h2>${file.name}</h2>
                     </a>
-                    <p class = "localisation">${fiche.city}, ${fiche.country}</p>
-                    <p>${fiche.tagline}</p>
-                    <p class = "tarif">${fiche.price}€</p>
+                    <p class = "localisation">${file.city}, ${file.country}</p>
+                    <p>${file.tagline}</p>
+                    <p class = "rate">${file.price}€</p>
             `
     
             //je crée un span pour chaque tags
             let ulTags = document.createElement('ul');
             
-            fiche.tags.forEach( tag => {
+            file.tags.forEach( tag => {
                 let spanTag = document.createElement('span');
                 spanTag.classList.add('hashtag');
                 spanTag.innerHTML += `#${tag}`;
                 ulTags.append(spanTag);
                 listOfPhotographers.append(ulTags);
             })
-            containerFichesPhotograhes.append(listOfPhotographers);
+            containerFilesPhotograhers.append(listOfPhotographers);
         });
     }
 
-    //J'appelle ma fonction pour créer les fiches photographes
+    //J'appelle ma fonction pour créer les files photographes
     createPhotographer(dataPhotographers);
     
     //je filtre mon nouveau tableau de photographes quand un tag est selectionné, avec boucle 
@@ -76,13 +76,13 @@ let tabsJson = fetch("../js/script.json")
                 arrayTagsFilter.every(tag => photographer.tags.includes(tag))
             );
             
-            //J'affiche le résultat du filtre
-            containerFichesPhotograhes.innerHTML = "";
+            //J'affile le résultat du filtre
+            containerFilesPhotograhers.innerHTML = "";
             createPhotographer(resultFilter)
 
             //Si aucun résultat trouvé, le spécifier à l'utilisateur 
             if(resultFilter.length == 0){
-                containerFichesPhotograhes.innerHTML = "Aucun résultat trouvé";
+                containerFilesPhotograhers.innerHTML = "Aucun résultat trouvé";
             }
         })
         

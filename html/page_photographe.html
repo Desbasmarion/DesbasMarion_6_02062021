@@ -13,7 +13,7 @@
 <body>
     <header role="banner">
         <a href="index.html">
-            <img src="../images/logo.png" alt="Fisheye Home page" class="logo_fiche">
+            <img src="../images/logo.png" alt="Fisheye Home page" class="logo_file">
         </a>
     </header>
     
@@ -44,7 +44,7 @@
                     <span class="errorMessage"></span>
                 </p>
                 <p>
-                    <button type="submit" class="btnEnvoi">Envoyer</button>
+                    <button type="submit" class="btnSend">Envoyer</button>
                 </p>
             </form>
         </div>
@@ -53,21 +53,20 @@
     <main id="main">
         <button type="button" aria-haspopup="dialog" aria-controls="dialog" class="button_contact">Contactez-moi</button>
     
-        <section class="header_photographe">
-            <!--Intégration javascript-->
+        <section class="header_photographer">
+            <!--Dynamics integration with javascript-->
         </section>
 
-        <section class="galerie">
-            <nav>
-                <ul class="tri">
-                    <li>Popularité</li>
-                    <li>Date</li>
-                    <li>Titre</li>
-                </ul>
-            </nav>
+        <section class="gallery">
+            <label for="sorting_media">Trier par</label>
+            <select name="options" id="sorting_media">
+                <option value="popularite">Popularité</option>
+                <option value="date">Date</option>
+                <option value="titre">Titre</option>
+            </select>
 
-            <div id="medias_photographe">
-            <!--Intégration javascript-->
+            <div id="medias_photographer">
+            <!--Dynamics integration with javascript-->
             </div>
         </section>
     </main>

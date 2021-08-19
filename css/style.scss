@@ -1,4 +1,4 @@
-/* mise en page index*/
+/* Layout index*/
 *{
     font-family: 'DM Sans', sans-serif;
 }
@@ -44,13 +44,13 @@ h1{
     color: #901C1C;
     width: auto;
 }
-#allFichesPhotographers{
+#allFilesPhotographers{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin-top: 4em;
 }
-.fiche_photographe{
+.file_photographer{
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -104,20 +104,20 @@ h1{
         font-size: 0.8125em;
         margin: 0.1875em;
     }
-    .tarif{
+    .rate{
         color: #757575;
         font-size: 0.5625em;
     }
 }
 
-/* mise en page fiches photographes*/
-.logo_fiche{
+/* Layout files photographers*/
+.logo_file{
     width: 15%;
     margin-left: 5%;
     margin-top: 2%;
     margin-bottom: 3%;
 }
-.header_photographe{
+.header_photographer{
     background-color: #FAFAFA;
     margin: auto;
     width: 85%;
@@ -190,25 +190,25 @@ h1{
     font-weight: 400;
     margin: 0;
 }
-#medias_photographe{
+#medias_photographer{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
-.bloc_photo{
+.block_photo{
     width: 30%;
     height: 550px;
 }
 #heart{
     cursor: pointer;
 }
-.visuel_media{
+.visual_media{
     width: 100%;
     height: 60%;
     object-fit: cover;
 }
 
-//Mise en page Modal contact
+//Layout Modal contact
 form{
     background-color: #DB8876;
     color: black;
@@ -266,6 +266,36 @@ form{
     top: 50px;
 }
 
+//Lightbox  
+.lightbox{
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: none;
+    img{
+        max-width: 90%;
+        max-height: 80%;
+    }
+    video{
+        max-width: 90%;
+        max-height: 80%;
+    }
+    .arrowPrevious, .arrowNext{
+        background-color: white;
+    }
+    .arrowPrevious{
+        transform: rotate(180deg);
+    }
+}
+  
+.lightbox.active{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 //Responsive mobile index
 @media screen and (max-width: 426px) {
@@ -293,21 +323,21 @@ form{
         font-weight: 400;
         width: auto;
     }
-    #allFichesPhotographers{
+    #allFilesPhotographers{
         flex-direction: column;
         margin-top: 0;
     }
-    .fiche_photographe{
+    .file_photographer{
         width: 100%;
     }
 
-    //Responsive fiches photographes
-    .logo_fiche{
+    //Responsive files photographers
+    .logo_file{
         width: 50%;
         margin: auto;
         margin-top: 3%;
     }
-    .header_photographe{
+    .header_photographer{
         background-color: white;
         padding: 0;
         width: 100%;
