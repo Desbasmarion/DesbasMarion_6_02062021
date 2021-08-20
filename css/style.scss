@@ -269,33 +269,82 @@ form{
 //Lightbox  
 .lightbox{
     position: fixed;
-    z-index: 1000;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: white;
-    display: none;
-    img{
-        max-width: 90%;
-        max-height: 80%;
+    z-index: 1000;
+    .nextMedia, .previousMedia{
+        background: url(../images/vector.png) center center / 100% 100%;
+        width: 30px;
+        height: 49px;
+        border: none;
+        position: fixed;
+        top: 50%;
+        right: 60px;
+        margin-top: -24px;
+        z-index: 1001;
+        cursor: pointer;
+        opacity: 1;
+        &:hover{
+            opacity: 0.5;
+        }
     }
-    video{
-        max-width: 90%;
-        max-height: 80%;
-    }
-    .arrowPrevious, .arrowNext{
-        background-color: white;
-    }
-    .arrowPrevious{
+    .previousMedia{
+        right: auto;
+        left: 60px;
         transform: rotate(180deg);
     }
+    
+    .closeLightbox{
+        background: url(../images/close.png) center center / 100% 100%;
+        width: 35px;
+        height: 35px;
+        border: none;
+        position: fixed;
+        top: 20px;
+        right: 60px;
+        z-index: 1002;
+        cursor: pointer;
+        opacity: 1;
+        &:hover{
+            opacity: 0.5;
+        }
+    }
+    .mediaContainer{
+        margin: 20px 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 95%;
+        img{
+            max-width: 100%;
+            height: 100%;
+        }
+    }
 }
+    // img{
+    //     max-width: 90%;
+    //     max-height: 80%;
+    // }
+//     video{
+//         max-width: 90%;
+//         max-height: 80%;
+//     }
+//     .arrowPrevious, .arrowNext{
+//         background-color: white;
+//     }
+//     .arrowPrevious{
+//         transform: rotate(180deg);
+//     }
+// }
   
-.lightbox.active{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+// .lightbox.active{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//}
 
 //Responsive mobile index
 @media screen and (max-width: 426px) {
