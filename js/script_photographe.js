@@ -43,65 +43,75 @@ fetch("../js/script.json")
     })
     
     /////////////////////////////Factory method - content generation/////////////////////////////
-    media.forEach( item => {
-        function createImage(){
-            htmlContainerMedia += `
-                <div class="block_photo">
-                    <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media">
-                    <h2 class="title_media">${item.title}</h2>
-                    <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
-                    <i class="fas fa-heart" data-media='${item.id}'></i>
-                </div>
-            `
-        }
-            
-        function createVideo(){
-             htmlContainerMedia += `
-                <div class="block_photo">
-                    <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media"></video>
-                    <h2 class="title_media">${item.title}</h2>
-                    <p class="number_likes" data-media="${item.id}">${item.likes}</p>
-                    <i class="fas fa-heart" data-media='${item.id}'></i>
-                </div>
-            `
-        }
-
-        function mediaFactory(){
-            if(item.photographerId == paramID && item.image){
-                return createImage();
-            }else if(item.photographerId == paramID && item.video){
-                return createVideo();   
+    function createElements(){
+        media.forEach( item => {
+            function createImage(){
+                htmlContainerMedia += `
+                    <div class="block_photo">
+                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media">
+                        <h2 class="title_media">${item.title}</h2>
+                        <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
+                        <i class="fas fa-heart" data-media='${item.id}'></i>
+                    </div>
+                `
             }
-        }
-
-        mediaFactory();
-    })
-
-    containerMedia.innerHTML = htmlContainerMedia;
-
-    /////////////////////////////Incrementation number of likes/////////////////////////////
-    let numbersLikes = document.querySelectorAll('.number_likes');
-    let iconHeart = document.querySelectorAll('.fa-heart');
-    let iconHeartData = [];
-   
-    iconHeart.forEach(icon => {
-        icon.addEventListener('click', e => {
-            //Push icon click on array + processing in case of click again
-            if(iconHeartData.indexOf(icon.dataset.media) === -1){
-                iconHeartData.push(icon.dataset.media)
-            }else{
-                iconHeartData.pop();
+                
+            function createVideo(){
+                htmlContainerMedia += `
+                    <div class="block_photo">
+                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media"></video>
+                        <h2 class="title_media">${item.title}</h2>
+                        <p class="number_likes" data-media="${item.id}">${item.likes}</p>
+                        <i class="fas fa-heart" data-media='${item.id}'></i>
+                    </div>
+                `
             }
-            //Incrementation number of likes click + one-click limitation per medias
-            numbersLikes.forEach(number =>{
-                if(number.dataset.media == iconHeartData){
-                    number.innerHTML++;
-                }else if (number.dataset.media == icon.dataset.media){
-                    number.innerHTML--;
+
+            function mediaFactory(){
+                if(item.photographerId == paramID && item.image){
+                    return createImage();
+                }else if(item.photographerId == paramID && item.video){
+                    return createVideo();   
                 }
-            })
+            }
+
+            mediaFactory();
         })
-    });
+    }
+    
+    createElements();
+    containerMedia.innerHTML = htmlContainerMedia;
+    
+    
+    /////////////////////////////Incrementation number of likes/////////////////////////////
+
+    function incrementationLikes(){
+        let numbersLikes = document.querySelectorAll('.number_likes');
+        let iconHeart = document.querySelectorAll('.fa-heart');
+        let iconHeartData = [];
+       
+        iconHeart.forEach(icon => {
+            icon.addEventListener('click', e => {
+                //Push icon click on array + processing in case of click again
+                if(iconHeartData.indexOf(icon.dataset.media) === -1){
+                    iconHeartData.push(icon.dataset.media)
+                }else{
+                    iconHeartData.pop();
+                }
+                //Incrementation number of likes click + one-click limitation per medias
+                numbersLikes.forEach(number =>{
+                    if(number.dataset.media == iconHeartData){
+                        number.innerHTML++;
+                    }else if (number.dataset.media == icon.dataset.media){
+                        number.innerHTML--;
+                    }
+                })
+            })
+        });
+    }
+    incrementationLikes();
+    
+   
 
     /////////////////////////////Lightbox/////////////////////////////
 
@@ -229,6 +239,51 @@ fetch("../js/script.json")
 
     lightbox.init()
 
+    /////////////////////////////Sorting medias/////////////////////////////
+    let select = document.querySelector('select');
+    select.value = -1;
+    let option = "";
+    
+    select.addEventListener('change', e => {
+        option = e.currentTarget.value;
+        
+        if (option === 'popularite'){
+            htmlContainerMedia = "";
+            media.sort((a, b) => {
+                if(a.likes > b.likes){
+                    return -1;
+                }
+            });
+            createElements();
+            containerMedia.innerHTML = htmlContainerMedia;
+            lightbox.init();
+            incrementationLikes();
+            
+        }else if(option === 'date'){
+            htmlContainerMedia = "";
+            media.sort((a,b) =>{
+                if(a.date > b.date){
+                    return -1
+                }
+            });
+            createElements();
+            containerMedia.innerHTML = htmlContainerMedia;
+            lightbox.init();
+            incrementationLikes();
+        
+        }else if(option === 'titre'){
+            htmlContainerMedia = "";
+            media.sort((a,b) => {
+                if(a.title < b.title){
+                    return -1 
+                }
+            });
+            createElements();
+            containerMedia.innerHTML = htmlContainerMedia;
+            lightbox.init();
+            incrementationLikes();
+        }
+    })
 })
 //End of fetch//
 
@@ -293,6 +348,7 @@ function validateForm(firstName, errorFirst, regexName){
         return true;
     }
 }
+
 
 
 
