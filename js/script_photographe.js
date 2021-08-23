@@ -124,8 +124,8 @@ fetch("../js/script.json")
 
         /**
          * 
-         * @param {string} url URL de l'image 
-         * @param {string[]} gallery chemins des images de la lightbox
+         * @param {string} url media URL
+         * @param {string[]} gallery medias paths of lightbox
          */
         constructor(url, gallery){
             this.element = this.buildDOM(url);
@@ -137,24 +137,24 @@ fetch("../js/script.json")
         }
         /**
          * 
-         * @param {string} url URL de l'image 
+         * @param {string} url media URL
          */
         loadMedia(url){
-            this.url = null;
             const image = new Image();
-            // const video = new Video();
+            const video = document.createElement('video');
+            video.setAttribute('controls', "");
             const container = this.element.querySelector('.mediaContainer');
-            container.innerHTML = "";
-            image.onload = () => {
-                container.appendChild(image);
-                this.url = url;
-            };
-            // video.onload = function (){
-            //     container.appendChild(video)
-            // };
 
-            image.src = url;
-            // video.src = url;
+            container.innerHTML = "";
+            this.url = url;
+
+            if(url.includes('jpg')){                
+                container.appendChild(image);
+                image.src = url;    
+            } else if(url.includes('mp4')){
+                container.appendChild(video);
+                video.src = url;
+            }
         }
 
         /**
@@ -172,7 +172,7 @@ fetch("../js/script.json")
         }
 
         /**
-         * Ferme la lightbox
+         * Close lightbox
          * @param {MouseEvent|KeyboardEvent} e 
          */
         close(e){
@@ -182,7 +182,7 @@ fetch("../js/script.json")
         }
 
         /**
-         * Media suivant
+         * Next media
          * @param {MouseEvent|KeyboardEvent} e 
          */
         next(e){
@@ -195,7 +195,7 @@ fetch("../js/script.json")
         }
 
         /**
-         * Media précédent
+         * Previous media
          * @param {MouseEvent|KeyboardEvent} e 
          */
         previous(e){
@@ -209,7 +209,7 @@ fetch("../js/script.json")
 
         /**
          * 
-         * @param {string} url URL du media 
+         * @param {string} url media URL
          * @return {HTMLElement}
          */
         buildDOM(url){
@@ -228,102 +228,6 @@ fetch("../js/script.json")
     }
 
     lightbox.init()
-
-    //Creation + insertion global div in DOM
-    // let lightbox = document.createElement('div');
-    // lightbox.classList.add('lightbox');
-    // document.body.appendChild(lightbox);
-    
-    //Creation close button
-    // let close = document.createElement('button');
-    // close.classList.add('buttonCloseLightbox');
-    // close.textContent = 'X';
-
-    //Creation navigation arrows
-    // let arrowPrevious = document.createElement('img');
-    // arrowPrevious.classList.add('arrowPrevious');
-    // arrowPrevious.src = '../images/vector.png'
-    // let arrowNext = document.createElement('img');
-    // arrowNext.classList.add('arrowNext');
-    // arrowNext.src = '../images/vector.png'
-
-    // let mediasLightbox = document.querySelectorAll('.visual_media');
-    
-    // //For each medias,to the click, show lightbox version
-    // mediasLightbox.forEach(media => {
-    //     media.addEventListener('click', e => {
-    //         let arrayMedias = Array.from(mediasLightbox)
-    //         let indexCurrentMedia = arrayMedias.findIndex( i => i === e.currentTarget);
-    //         let indexNext = indexCurrentMedia + 1;
-    //         let indexPrevious = indexCurrentMedia - 1;
-            
-    //         lightbox.classList.add('active');
-
-    //         //Creation elements medias 
-    //         let mediaImage = document.createElement('img');
-    //         mediaImage.classList.add('visualMediaLightbox');
-    //         let mediaVideo = document.createElement('video');
-    //         mediaVideo.classList.add('visualMediaLightbox');
-    //         mediaVideo.setAttribute('controls', "");
-
-    //         mediaImage.src = media.src;
-    //         mediaVideo.src = media.src;
-
-        
-    //         while (lightbox.firstChild) {
-    //             lightbox.removeChild(lightbox.firstChild)
-    //         }
-
-    //         lightbox.appendChild(close);
-    //         lightbox.appendChild(arrowPrevious);
-    //         lightbox.appendChild(arrowNext);
-            
-    //         if(media.src.includes('jpg')){
-    //             lightbox.appendChild(mediaImage);
-    //         }else{
-    //             lightbox.appendChild(mediaVideo)
-    //         }
-            
-    //         //Scrolling medias with arrow next
-    //         arrowNext.addEventListener('click', e => {
-
-    //             let mediaNext = document.querySelector('.visualMediaLightbox');
-
-    //             mediaNext = arrayMedias[indexNext];
-    //             mediaImage.src = mediaNext.src
-    //             mediaVideo.src = mediaNext.src
-                
-    //             if(mediaNext.src.includes('jpg')){
-    //                 mediaImage = mediaNext;
-    //             }else{
-    //                 mediaVideo = mediaNext;
-    //             }
-    //         })
-            
-    //         //Scrolling medias with arrow previous
-    //         arrowPrevious.addEventListener('click', e => {
-                
-    //             let mediaPrevious = document.querySelector('.visualMediaLightbox');
-
-    //             mediaPrevious = arrayMedias[indexPrevious];
-
-    //             if(mediaPrevious.src.includes('jpg')){
-    //                 mediaImage.src = mediaPrevious.src
-    //               }else{
-    //                 mediaVideo.src = mediaPrevious.src
-    //               }
-    //         })
-            
-    //     })
-    // })
-
-    // //Closing Lightbox
-    // close.addEventListener('click', e => {
-    //     while (lightbox.firstChild) {
-    //         lightbox.removeChild(lightbox.firstChild)
-    //     }
-    //     lightbox.classList.remove('active');
-    // })
 
 })
 //End of fetch//
