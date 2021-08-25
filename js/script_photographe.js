@@ -130,7 +130,7 @@ fetch("../js/script.json")
                 e.preventDefault();
                 new lightbox(e.currentTarget.getAttribute('src'), gallery)
             }))
-    }
+        }
 
         /**
          * 

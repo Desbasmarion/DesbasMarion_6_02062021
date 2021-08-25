@@ -13,37 +13,60 @@ let tabsJson = fetch("../js/script.json")
     //Dynamics creation of photographers files
     let listOfPhotographers = "";
     
-    //Creation global div for each photographer file with his data
-    function createPhotographer(dataPhotographers){
-        dataPhotographers.forEach(file =>{
-            listOfPhotographers = document.createElement('div');
-            listOfPhotographers.classList.add('file_photographer');
-            listOfPhotographers.innerHTML += `
-                    <a href ="page_photographe.html?id=${file.id}" class="link">
-                        <img src = "../Sample_Photos/Photographers_ID_Photos/${file.portrait}" alt =${file.name} id =${file.name}>
-                        <h2>${file.name}</h2>
-                    </a>
-                    <p class = "localisation">${file.city}, ${file.country}</p>
-                    <p>${file.tagline}</p>
-                    <p class = "rate">${file.price}€</p>
-            `
-    
-            //Creation span for each tag
-            let ulTags = document.createElement('ul');
-            
-            file.tags.forEach( tag => {
-                let spanTag = document.createElement('span');
-                spanTag.classList.add('hashtag');
-                spanTag.innerHTML += `#${tag}`;
-                ulTags.append(spanTag);
-                listOfPhotographers.append(ulTags);
+    //Test POO for creation photographers
+    class Photographer{
+        createPhotographer(dataPhotographers){
+            dataPhotographers.forEach(file =>{
+                listOfPhotographers = document.createElement('div');
+                listOfPhotographers.classList.add('file_photographer');
+                listOfPhotographers.innerHTML += `
+                        <a href ="page_photographe.html?id=${file.id}" class="link">
+                            <img src = "../Sample_Photos/Photographers_ID_Photos/${file.portrait}" alt =${file.name} id =${file.name}>
+                            <h2>${file.name}</h2>
+                        </a>
+                        <p class = "localisation">${file.city}, ${file.country}</p>
+                        <p>${file.tagline}</p>
+                        <p class = "rate">${file.price}€</p>
+                        `
+                containerFilesPhotograhers.append(listOfPhotographers);
             })
-            containerFilesPhotograhers.append(listOfPhotographers);
-        });
+        }               
     }
+    const test = new Photographer()
+    
 
-    //Call function for create photographers files
-    createPhotographer(dataPhotographers);
+
+    //Creation global div for each photographer file with his data
+    // function createPhotographer(dataPhotographers){
+    //     dataPhotographers.forEach(file =>{
+    //         listOfPhotographers = document.createElement('div');
+    //         listOfPhotographers.classList.add('file_photographer');
+    //         listOfPhotographers.innerHTML += `
+    //                 <a href ="page_photographe.html?id=${file.id}" class="link">
+    //                     <img src = "../Sample_Photos/Photographers_ID_Photos/${file.portrait}" alt =${file.name} id =${file.name}>
+    //                     <h2>${file.name}</h2>
+    //                 </a>
+    //                 <p class = "localisation">${file.city}, ${file.country}</p>
+    //                 <p>${file.tagline}</p>
+    //                 <p class = "rate">${file.price}€</p>
+    //         `
+    
+    //         //Creation span for each tag
+    //         let ulTags = document.createElement('ul');
+            
+    //         file.tags.forEach( tag => {
+    //             let spanTag = document.createElement('span');
+    //             spanTag.classList.add('hashtag');
+    //             spanTag.innerHTML += `#${tag}`;
+    //             ulTags.append(spanTag);
+    //             listOfPhotographers.append(ulTags);
+    //         })
+    //         containerFilesPhotograhers.append(listOfPhotographers);
+    //     });
+    // }
+
+    // //Call function for create photographers files
+    // createPhotographer(dataPhotographers);
     
     //Filter new table of photographers when a tag was selected
     const alltags = document.querySelectorAll(".hashtag");
@@ -75,9 +98,8 @@ let tabsJson = fetch("../js/script.json")
             
             //Show result of filter
             containerFilesPhotograhers.innerHTML = "";
-            createPhotographer(resultFilter)
+            createPhotographer(resultFilter);
 
-            //Si aucun résultat trouvé, le spécifier à l'utilisateur 
             //If no results found, tell the user
             if(resultFilter.length == 0){
                 containerFilesPhotograhers.innerHTML = "Aucun résultat trouvé";
