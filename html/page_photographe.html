@@ -12,46 +12,46 @@
 
 <body>
     <header role="banner">
-        <a href="index.html">
+        <a href="index.html" aria-label="Home page">
             <img src="../images/logo.png" alt="Fisheye Home page" class="logo_file">
         </a>
     </header>
     
-    <div id="dialog" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc" aria-modal="true" aria-hidden="true" tabindex="-1" class="c-dialog">
+    <section id="dialog" role="dialog" aria-labelledby="" aria-describedby="dialog-desc" aria-modal="true" aria-hidden="true" tabindex="-1" class="c-dialog">
         <div role="document" class="c-dialog__box">
-            <button type="button" aria-label="Fermer" title="Fermer cette fenêtre modale" data-dismiss="dialog" class="buttonClose">X</button>
+            <button type="button" aria-label="Close Contact Form" title="Fermer cette fenêtre modale" data-dismiss="dialog" class="buttonClose">X</button>
             <form action="" method="post">
                 <h2>Contactez-moi</h2>
 
                 <p>
                     <label for="firstName">Prénom</label><br/>
-                    <input type="text" id="firstName"/>
+                    <input type="text" id="firstName" aria-labelledby3="First name" aria-required="true"/>
                     <span class="errorFirst"></span>
                 </p>
                 <p>
                     <label for="lastName">Nom</label><br/>
-                    <input type="text" id="lastName">
+                    <input type="text" id="lastName" aria-labelledby5="Last name" aria-required="true">
                     <span class="errorLast"></span>
                 </p>
                 <p>
                     <label for="email">Email</label><br />
-                    <input type="email" id="email" />
+                    <input type="email" id="email" aria-labelledby7="Email" aria-required="true"/>
                     <span class="errorMail"></span>
                 </p>
                 <p>
                     <label for="message">Votre message</label>
-                    <textarea name="message" id="message" cols="45" rows="7"></textarea>
+                    <textarea name="message" id="message" cols="45" rows="7" aria-labelledby9="Your message" aria-required="true"></textarea>
                     <span class="errorMessage"></span>
                 </p>
                 <p>
-                    <button type="submit" class="btnSend">Envoyer</button>
+                    <button type="submit" class="btnSend" aria-label="Send">Envoyer</button>
                 </p>
             </form>
         </div>
-    </div>
+    </section>
 
     <main id="main">
-        <button type="button" aria-haspopup="dialog" aria-controls="dialog" class="button_contact">Contactez-moi</button>
+        <button type="button" aria-haspopup="dialog" aria-controls="dialog" class="button_contact" aria-label="Contact Me">Contactez-moi</button>
     
         <section class="header_photographer">
             <!--Dynamics integration with javascript-->
@@ -65,9 +65,9 @@
                 <option value="titre">Titre</option>
             </select>
 
-            <div id="medias_photographer">
+            <section id="medias_photographer">
             <!--Dynamics integration with javascript-->
-            </div>
+            </section>
 
         </section>
     </main>

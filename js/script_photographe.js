@@ -7,6 +7,7 @@ let htmlContainerMedia = "";
 
 let paramID = window.location.search.split("=")[1];
 
+
 fetch("../js/script.json")
 .then(response => response.json())
 .then(data => {
@@ -14,15 +15,14 @@ fetch("../js/script.json")
     let media = data.media;
     let photographers = data.photographers;
 
-    let photographerName = "";
-
     let htmlHeader = "";
 
     photographers.forEach(item => {
-
-        photographerName = item.name;
-
         if (item.id == paramID){
+            modal.ariaLabel = 'contact me ' + item.name;
+            namePhotographer.innerHTML += `<br>${item.name}`;
+
+           
             htmlHeader = document.createElement('section');
             htmlHeader.classList.add('header_photographer');
             htmlHeader.innerHTML += `
@@ -53,27 +53,27 @@ fetch("../js/script.json")
         media.forEach( item => {
             function createImage(){
                 htmlContainerMedia += `
-                    <div class="block_photo">
-                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media">
+                    <article class="block_photo" tabindex="0">
+                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media" alt="${item.title}, close up view">
                         <h2 class="title_media">${item.title}</h2>
                         <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
-                        <i class="fas fa-heart" data-media='${item.id}'></i>
+                        <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
                         <span>${item.price}€</span>
                         <span>${item.date}</span>
-                    </div>
+                    </article>
                 `
             }
                 
             function createVideo(){
                 htmlContainerMedia += `
-                    <div class="block_photo">
-                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media"></video>
+                    <article class="block_photo" tabindex="0">
+                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media" alt="${item.title}, close up view"></video>
                         <h2 class="title_media">${item.title}</h2>
                         <p class="number_likes" data-media="${item.id}">${item.likes}</p>
-                        <i class="fas fa-heart" data-media='${item.id}'></i>
+                        <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
                         <span>${item.price}€</span>
                         <span>${item.date}</span>
-                    </div>
+                    </article>
                 `
             }
 
@@ -130,16 +130,27 @@ fetch("../js/script.json")
      * @property {string[]} gallery Chemins des images de la lightbox
      * @property {string} url Media actuellement affiché
      */
+
+    let mediaDescription = "";
     class lightbox{
         static init() {
             const links = Array.from(document.querySelectorAll('img[src$=".jpg"], video[src$=".mp4"]'))
 
             const gallery = links.map(link => link.getAttribute('src'));
-            
+            const mediaDescription = links.map(link => link.getAttribute('alt'));
+
             links.forEach(link => link.addEventListener('click', e => {
                 e.preventDefault();
-                new lightbox(e.currentTarget.getAttribute('src'), gallery)
+                new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription)
             }))
+            links.forEach(link => {
+                link.addEventListener('keydown', e => {
+                    if(e.which === keyCodes.enter){
+                        e.preventDefault();
+                        new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription)
+                    }
+                })
+            })
         }
 
         /**
@@ -147,13 +158,17 @@ fetch("../js/script.json")
          * @param {string} url media URL
          * @param {string[]} gallery medias paths of lightbox
          */
-        constructor(url, gallery){
+        constructor(url, gallery, mediaDescription){
             this.element = this.buildDOM(url);
             this.gallery = gallery;
+            this.mediaDescription = mediaDescription;
             document.body.appendChild(this.element);
             this.loadMedia(url);
             this.onKeyUp = this.onKeyUp.bind(this)
             document.addEventListener('keyup', this.onKeyUp.bind(this))
+            
+            console.log(mediaDescription);
+
         }
         /**
          * 
@@ -161,6 +176,7 @@ fetch("../js/script.json")
          */
         loadMedia(url){
             const image = new Image();
+           
             const video = document.createElement('video');
             video.setAttribute('controls', "");
             const container = this.element.querySelector('.mediaContainer');
@@ -170,7 +186,7 @@ fetch("../js/script.json")
 
             if(url.includes('jpg')){                
                 container.appendChild(image);
-                image.src = url;    
+                image.src = url;
             } else if(url.includes('mp4')){
                 container.appendChild(video);
                 video.src = url;
@@ -211,7 +227,7 @@ fetch("../js/script.json")
             if(i === this.gallery.length - 1){
                 i = -1;
             }
-            this.loadMedia(this.gallery[i + 1])
+            this.loadMedia(this.gallery[i + 1]);
         }
 
         /**
@@ -233,9 +249,10 @@ fetch("../js/script.json")
          * @return {HTMLElement}
          */
         buildDOM(url){
-            const dom = document.createElement('div');
+            const dom = document.createElement('section');
             dom.classList.add('lightbox');
-            dom.innerHTML = `<button type="button" class="closeLightbox"></button>
+            dom.ariaLabel = 'image open view';
+            dom.innerHTML = `<button type="button" class="closeLightbox" aria-label="Close dialog"></button>
             <button type="button" class="nextMedia"></button>
             <button type="button" class="previousMedia"></button>
             <div class="mediaContainer"></div>
@@ -252,6 +269,7 @@ fetch("../js/script.json")
     /////////////////////////////Sorting medias/////////////////////////////
     let select = document.querySelector('select');
     select.value = -1;
+    select.ariaLabel = 'Order by'
     let option = "";
     
     select.addEventListener('change', e => {
@@ -302,6 +320,7 @@ fetch("../js/script.json")
 
 //Elements Form
 let formModal = document.querySelector('form')
+let namePhotographer = document.querySelector('form > h2');
 let buttonContact = document.querySelector('.button_contact');
 let modal = document.querySelector('#dialog');
 let buttonClose = document.querySelector('.buttonClose');
@@ -320,10 +339,46 @@ let errorMessage = document.querySelector('.errorMessage');
 let arrayErrorMessage = [errorFirst, errorLast, errorMail, errorMessage];
 
 //Opening modal
-buttonContact.addEventListener('click', e => modal.style.display = "block");
+function openModal(){
+    buttonContact.addEventListener('click', e => {
+        modal.style.display = "block";
+        main.setAttribute('aria-hidden', 'true');
+        modal.setAttribute('aria-hidden', 'false');
 
-//Closing modale
-buttonClose.addEventListener('click', e => modal.style.display = "none");
+    })
+}
+openModal()
+
+//Closing modal
+function closeModal(){
+    buttonClose.addEventListener('click', e => modal.style.display = "none");
+}
+closeModal()
+
+
+//Accessibility
+const keyCodes = {
+    enter: 13,
+    escape: 27,
+};
+//Accessibility - Opening modal 
+buttonContact.addEventListener('keydown', e => {
+    if (e.which === keyCodes.enter) {
+        e.preventDefault();
+        modal.style.display = "block"
+        main.style.display = 'none';
+    }  
+});
+
+//Accessibility - Closing modal
+buttonClose.addEventListener('keydown', e => {
+    if (e.which === keyCodes.escape | e.which === keyCodes.enter) {
+        e.preventDefault();
+        modal.style.display = "none";
+        main.style.display = 'block';
+    }      
+  });
+
 
 //Regex
 const regexName = /^[a-zA-Z-\s]{2,}$/;
@@ -336,6 +391,18 @@ buttonSend.addEventListener('click', e => {
     validateForm(firstName, errorFirst, regexName);
     validateForm(lastName, errorLast, regexName);
     validateForm(email, errorMail, regexEmail);
+
+    if(texteareaForm.value == ""){
+        errorMessage.textContent = "Veuillez renseigner votre message";
+        errorMessage.style.fontStyle = "italic";
+        errorMessage.setAttribute('aria-invalid', 'true')
+        texteareaForm.style.animation = "shake 0.82s cubic-bezier(.36,.07,.19,.97) both";
+        texteareaForm.style.transform = 'translate3d(0, 0, 0)';
+    }else{
+        errorMessage.textContent = "";
+        texteareaForm.style.animation = "";
+        texteareaForm.style.transform = "";
+    }
 
     if (!firstName.value == "" && !lastName.value == "" && !email.value == "" && regexName.test(firstName.value) == true && regexName.test(lastName.value) == true && regexEmail.test(email.value) == true && !texteareaForm.value == ""){
         console.log(firstName.value, lastName.value, email.value);
@@ -350,11 +417,19 @@ function validateForm(firstName, errorFirst, regexName){
     if(firstName.value == ""){
         errorFirst.textContent = "champs obligatoire";
         errorFirst.style.fontStyle = "italic";
+        errorFirst.setAttribute('aria-invalid', 'true');
+        firstName.style.animation = "shake 0.82s cubic-bezier(.36,.07,.19,.97) both";
+        firstName.style.transform = 'translate3d(0, 0, 0)';
     }else if (regexName.test(firstName.value) == false){
         errorFirst.textContent = "syntaxe incorrecte";
         errorFirst.style.fontStyle = "italic";
+        errorFirst.setAttribute('aria-invalid', 'true');
+        firstName.style.animation = "shake 0.82s cubic-bezier(.36,.07,.19,.97) both";
+        firstName.style.transform = 'translate3d(0, 0, 0)';
     }else{
         errorFirst.textContent = "";
+        firstName.style.animation = "";
+        firstName.style.transform = "";
         return true;
     }
 }
