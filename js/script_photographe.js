@@ -14,9 +14,14 @@ fetch("../js/script.json")
     let media = data.media;
     let photographers = data.photographers;
 
+    let photographerName = "";
+
     let htmlHeader = "";
 
     photographers.forEach(item => {
+
+        photographerName = item.name;
+
         if (item.id == paramID){
             htmlHeader = document.createElement('section');
             htmlHeader.classList.add('header_photographer');
@@ -42,6 +47,7 @@ fetch("../js/script.json")
         }
     })
     
+   
     /////////////////////////////Factory method - content generation/////////////////////////////
     function createElements(){
         media.forEach( item => {
@@ -52,6 +58,8 @@ fetch("../js/script.json")
                         <h2 class="title_media">${item.title}</h2>
                         <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
                         <i class="fas fa-heart" data-media='${item.id}'></i>
+                        <span>${item.price}€</span>
+                        <span>${item.date}</span>
                     </div>
                 `
             }
@@ -63,6 +71,8 @@ fetch("../js/script.json")
                         <h2 class="title_media">${item.title}</h2>
                         <p class="number_likes" data-media="${item.id}">${item.likes}</p>
                         <i class="fas fa-heart" data-media='${item.id}'></i>
+                        <span>${item.price}€</span>
+                        <span>${item.date}</span>
                     </div>
                 `
             }

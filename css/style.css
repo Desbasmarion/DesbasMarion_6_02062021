@@ -7,6 +7,29 @@ body {
   margin: 0 auto;
 }
 
+.photographers {
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+}
+.photographers--redirect {
+  height: 1.5em;
+  width: 10em;
+  border-radius: 0.5em;
+  background-color: #DB8876;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0.5em;
+  left: calc((100% - 10em) / 2);
+  font-size: 1em;
+  font-weight: bold;
+  color: black;
+  z-index: 500;
+}
+
 #banner_index {
   display: flex;
   margin-top: 2.625em;
