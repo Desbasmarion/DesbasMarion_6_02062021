@@ -35,15 +35,10 @@ body {
   margin: 0 auto;
 }
 
-.photographers {
-  display: flex;
-  justify-content: center;
-  margin-top: 5em;
-}
 .photographers--redirect {
   height: 1.5em;
   width: 10em;
-  border-radius: 0.5em;
+  border-radius: 0.3em;
   background-color: #DB8876;
   text-decoration: none;
   display: flex;
@@ -197,12 +192,14 @@ h1 {
   height: 224px;
   -o-object-fit: cover;
      object-fit: cover;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
 }
 .header_photographer h1 {
-  font-size: 55px;
+  font-size: 40px;
   color: #D3573C;
   font-weight: 400;
   margin-bottom: 1%;
+  width: 40%;
 }
 .header_photographer > :nth-child(3) {
   font-size: 16px;
@@ -243,8 +240,9 @@ h1 {
   bottom: 180px;
   left: 410px;
   padding: 1%;
-  height: 60px;
   cursor: pointer;
+  height: 45px;
+  font-weight: bold;
 }
 
 .localisation {
@@ -399,14 +397,26 @@ form button:active {
     max-width: 100%;
   }
 
+  #main {
+    width: 100%;
+  }
+
+  .photographers--redirect {
+    display: none;
+  }
+
   .tags {
     width: 100%;
     padding: 0;
     flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-between;
+    height: 3.5em;
   }
 
   #banner_index {
     display: block;
+    margin-top: 1.4em;
   }
 
   .logo {
@@ -417,7 +427,7 @@ form button:active {
   h1 {
     font-size: 14px;
     position: absolute;
-    bottom: 365px;
+    bottom: 382px;
     right: 10px;
     font-weight: 400;
     width: auto;
@@ -426,6 +436,7 @@ form button:active {
   #allFilesPhotographers {
     flex-direction: column;
     margin-top: 0;
+    text-align: center;
   }
 
   .file_photographer {
@@ -448,6 +459,7 @@ form button:active {
     position: initial;
     font-size: 36px;
     width: 65%;
+    margin-left: -0.1em;
   }
   .header_photographer p {
     font-size: 13px;
@@ -455,16 +467,45 @@ form button:active {
   .header_photographer > :nth-child(3) {
     font-size: 13px;
     margin-top: 2%;
+    margin-bottom: 1%;
   }
   .header_photographer img {
-    width: 30%;
+    width: 80px;
+    height: 80px;
     right: 20px;
     top: 90px;
+  }
+  .header_photographer ul {
+    margin-left: 0;
   }
   .header_photographer li {
     font-size: 13px;
   }
-  .header_photographer .button_contact {
-    display: none;
+  .header_photographer .hashtag {
+    font-size: 0.8em;
+  }
+
+  .button_contact {
+    position: fixed;
+    left: 35%;
+    bottom: 5%;
+    width: auto;
+    height: auto;
+  }
+}
+@media screen and (min-width: 427px) and (max-width: 769px) {
+  nav {
+    width: 35%;
+  }
+  nav .tags {
+    width: 100%;
+    justify-content: center;
+  }
+  nav .tags .hashtag {
+    margin-bottom: 2%;
+  }
+
+  .file_photographer {
+    width: 35%;
   }
 }/*# sourceMappingURL=style.css.map */

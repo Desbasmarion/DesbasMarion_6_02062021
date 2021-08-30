@@ -133,28 +133,24 @@ fetch("../js/script.json")
 
     class lightbox{
         static init() {
-            const keyCodes = {
-                enter: 13,
-                escape: 27,
-            };
             const links = Array.from(document.querySelectorAll('img[src$=".jpg"], video[src$=".mp4"]'))
 
             const gallery = links.map(link => link.getAttribute('src'));
-            let mediaDescription = [];
-            
+            const altMedias = links.map(link => link.getAttribute('alt'))
+
             links.forEach(link => {
                 link.addEventListener('click', e => {
                     e.preventDefault();
-                    new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription);
-                    mediaDescription.push(e.currentTarget.getAttribute('alt'))
+                    let mediaDescription = e.currentTarget.getAttribute('alt');
+                    new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription, altMedias);
                 })
     
                 //Accessibility version
                 link.addEventListener('keydown', e => {
                     if(e.which === keyCodes.enter){
                         e.preventDefault();
-                        new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription);
-                        mediaDescription.push(e.currentTarget.getAttribute('alt'))
+                        let mediaDescription = e.currentTarget.getAttribute('alt');
+                        new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription, altMedias);
                     }
                 })
             })
@@ -165,13 +161,14 @@ fetch("../js/script.json")
          * @param {string} url media URL
          * @param {string[]} gallery medias paths of lightbox
          */
-        constructor(url, gallery, mediaDescription){
+        constructor(url, gallery, mediaDescription, altMedias){
             this.mediaDescription = mediaDescription;
             this.element = this.buildDOM(url);
             this.gallery = gallery;
+            this.altMedias = altMedias;
             
             document.body.appendChild(this.element);
-            this.loadMedia(url, mediaDescription);
+            this.loadMedia(url);
             this.onKeyUp = this.onKeyUp.bind(this)
             document.addEventListener('keyup', this.onKeyUp.bind(this))
         }
@@ -192,9 +189,11 @@ fetch("../js/script.json")
             if(url.includes('jpg')){                
                 container.appendChild(image);
                 image.src = url;
+                image.alt = this.mediaDescription;
             } else if(url.includes('mp4')){
                 container.appendChild(video);
                 video.src = url;
+                video.alt = this.mediaDescription;
             }
         }
 
@@ -229,10 +228,18 @@ fetch("../js/script.json")
         next(e){
             e.preventDefault();
             let i = this.gallery.findIndex(image => image === this.url);
+            let p = this.altMedias.findIndex(media => media === this.mediaDescription);
+            console.log(i);
+            console.log(p);
+
             if(i === this.gallery.length - 1){
                 i = -1;
             }
-            this.loadMedia(this.gallery[i + 1]);
+            if(p === this.altMedias.length -1){
+                p = 1;
+            }
+
+           this.loadMedia(this.gallery[i + 1], this.altMedias[p + 1]);
         }
 
         /**
