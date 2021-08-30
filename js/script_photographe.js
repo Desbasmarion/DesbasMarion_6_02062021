@@ -53,8 +53,8 @@ fetch("../js/script.json")
         media.forEach( item => {
             function createImage(){
                 htmlContainerMedia += `
-                    <article class="block_photo" tabindex="0">
-                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media" alt="${item.title}, close up view">
+                    <article class="block_photo">
+                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media" alt="${item.title}, close up view"  tabindex="0">
                         <h2 class="title_media">${item.title}</h2>
                         <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
                         <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
@@ -66,8 +66,8 @@ fetch("../js/script.json")
                 
             function createVideo(){
                 htmlContainerMedia += `
-                    <article class="block_photo" tabindex="0">
-                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media" alt="${item.title}, close up view"></video>
+                    <article class="block_photo">
+                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media" alt="${item.title}, close up view" tabindex="0"></video>
                         <h2 class="title_media">${item.title}</h2>
                         <p class="number_likes" data-media="${item.id}">${item.likes}</p>
                         <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
@@ -131,23 +131,30 @@ fetch("../js/script.json")
      * @property {string} url Media actuellement affiché
      */
 
-    let mediaDescription = "";
     class lightbox{
         static init() {
+            const keyCodes = {
+                enter: 13,
+                escape: 27,
+            };
             const links = Array.from(document.querySelectorAll('img[src$=".jpg"], video[src$=".mp4"]'))
 
             const gallery = links.map(link => link.getAttribute('src'));
-            const mediaDescription = links.map(link => link.getAttribute('alt'));
-
-            links.forEach(link => link.addEventListener('click', e => {
-                e.preventDefault();
-                new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription)
-            }))
+            let mediaDescription = [];
+            
             links.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription);
+                    mediaDescription.push(e.currentTarget.getAttribute('alt'))
+                })
+    
+                //Accessibility version
                 link.addEventListener('keydown', e => {
                     if(e.which === keyCodes.enter){
                         e.preventDefault();
-                        new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription)
+                        new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription);
+                        mediaDescription.push(e.currentTarget.getAttribute('alt'))
                     }
                 })
             })
@@ -159,22 +166,20 @@ fetch("../js/script.json")
          * @param {string[]} gallery medias paths of lightbox
          */
         constructor(url, gallery, mediaDescription){
+            this.mediaDescription = mediaDescription;
             this.element = this.buildDOM(url);
             this.gallery = gallery;
-            this.mediaDescription = mediaDescription;
+            
             document.body.appendChild(this.element);
-            this.loadMedia(url);
+            this.loadMedia(url, mediaDescription);
             this.onKeyUp = this.onKeyUp.bind(this)
             document.addEventListener('keyup', this.onKeyUp.bind(this))
-            
-            console.log(mediaDescription);
-
         }
         /**
          * 
          * @param {string} url media URL
          */
-        loadMedia(url){
+        loadMedia(url, mediaDescription){
             const image = new Image();
            
             const video = document.createElement('video');

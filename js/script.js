@@ -107,7 +107,7 @@ let tabsJson = fetch("../js/script.json")
                         //Show result of filter
                         containerFilesPhotograhers.innerHTML = "";
                         this.createPhotographer(resultFilter);
-
+ 
                         //If no results found, tell the user
                         if(resultFilter.length == 0){
                             containerFilesPhotograhers.innerHTML = "Aucun résultat trouvé";
