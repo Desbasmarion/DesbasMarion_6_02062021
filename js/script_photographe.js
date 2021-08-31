@@ -55,11 +55,13 @@ fetch("../js/script.json")
                 htmlContainerMedia += `
                     <article class="block_photo">
                         <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media" alt="${item.title}, close up view"  tabindex="0">
-                        <h2 class="title_media">${item.title}</h2>
-                        <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
-                        <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
-                        <span>${item.price}€</span>
-                        <span>${item.date}</span>
+                        <div class="media_infos">
+                            <h2 class="title_media">${item.title}</h2>
+                            <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
+                            <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
+                            <span>${item.price}€</span>
+                            <span>${item.date}</span>
+                        </div>
                     </article>
                 `
             }
@@ -68,11 +70,13 @@ fetch("../js/script.json")
                 htmlContainerMedia += `
                     <article class="block_photo">
                         <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media" alt="${item.title}, close up view" tabindex="0"></video>
-                        <h2 class="title_media">${item.title}</h2>
-                        <p class="number_likes" data-media="${item.id}">${item.likes}</p>
-                        <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
-                        <span>${item.price}€</span>
-                        <span>${item.date}</span>
+                        <div class="media_infos">
+                            <h2 class="title_media">${item.title}</h2>
+                            <p class="number_likes" data-media="${item.id}">${item.likes}</p>
+                            <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
+                            <span>${item.price}€</span>
+                            <span>${item.date}</span>
+                        </div>
                     </article>
                 `
             }
@@ -143,6 +147,7 @@ fetch("../js/script.json")
                     e.preventDefault();
                     let mediaDescription = e.currentTarget.getAttribute('alt');
                     new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription, altMedias);
+                    console.log(mediaDescription);
                 })
     
                 //Accessibility version
@@ -151,6 +156,7 @@ fetch("../js/script.json")
                         e.preventDefault();
                         let mediaDescription = e.currentTarget.getAttribute('alt');
                         new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription, altMedias);
+                        
                     }
                 })
             })
@@ -161,8 +167,8 @@ fetch("../js/script.json")
          * @param {string} url media URL
          * @param {string[]} gallery medias paths of lightbox
          */
-        constructor(url, gallery, mediaDescription, altMedias){
-            this.mediaDescription = mediaDescription;
+        constructor(url, gallery, altMedias){
+            //this.mediaDescription = mediaDescription;
             this.element = this.buildDOM(url);
             this.gallery = gallery;
             this.altMedias = altMedias;
@@ -185,15 +191,17 @@ fetch("../js/script.json")
 
             container.innerHTML = "";
             this.url = url;
+            this.mediaDescription = mediaDescription;
+            
 
             if(url.includes('jpg')){                
                 container.appendChild(image);
                 image.src = url;
-                image.alt = this.mediaDescription;
+                image.alt = mediaDescription;
             } else if(url.includes('mp4')){
                 container.appendChild(video);
                 video.src = url;
-                video.alt = this.mediaDescription;
+                video.alt = mediaDescription;
             }
         }
 
@@ -228,18 +236,18 @@ fetch("../js/script.json")
         next(e){
             e.preventDefault();
             let i = this.gallery.findIndex(image => image === this.url);
-            let p = this.altMedias.findIndex(media => media === this.mediaDescription);
+            //let p = this.altMedias.findIndex(media => media === this.mediaDescription);
             console.log(i);
             console.log(p);
 
             if(i === this.gallery.length - 1){
                 i = -1;
             }
-            if(p === this.altMedias.length -1){
-                p = 1;
-            }
+            // if(p === this.altMedias.length -1){
+            //     p = -1;
+            // }
 
-           this.loadMedia(this.gallery[i + 1], this.altMedias[p + 1]);
+           this.loadMedia(this.gallery[i + 1]);
         }
 
         /**
