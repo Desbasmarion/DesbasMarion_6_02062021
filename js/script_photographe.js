@@ -15,6 +15,9 @@ fetch("../js/script.json")
     let media = data.media;
     let photographers = data.photographers;
 
+    let totalLikes = [];
+    let pricePerDay = document.createElement('span');
+
     let htmlHeader = "";
 
     photographers.forEach(item => {
@@ -22,6 +25,7 @@ fetch("../js/script.json")
             modal.ariaLabel = 'contact me ' + item.name;
             namePhotographer.innerHTML += `<br>${item.name}`;
 
+            pricePerDay.innerHTML = item.price + '€/jour';
            
             htmlHeader = document.createElement('section');
             htmlHeader.classList.add('header_photographer');
@@ -59,8 +63,6 @@ fetch("../js/script.json")
                             <h2 class="title_media">${item.title}</h2>
                             <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
                             <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
-                            <span>${item.price}€</span>
-                            <span>${item.date}</span>
                         </div>
                     </article>
                 `
@@ -74,8 +76,6 @@ fetch("../js/script.json")
                             <h2 class="title_media">${item.title}</h2>
                             <p class="number_likes" data-media="${item.id}">${item.likes}</p>
                             <i class="fas fa-heart" data-media='${item.id}' aria-label="likes"></i>
-                            <span>${item.price}€</span>
-                            <span>${item.date}</span>
                         </div>
                     </article>
                 `
@@ -137,7 +137,7 @@ fetch("../js/script.json")
 
     class lightbox{
         static init() {
-            const links = Array.from(document.querySelectorAll('img[src$=".jpg"], video[src$=".mp4"]'))
+            const links = Array.from(document.querySelectorAll('.visual_media'))
 
             const gallery = links.map(link => link.getAttribute('src'));
             const altMedias = links.map(link => link.getAttribute('alt'))
@@ -146,8 +146,7 @@ fetch("../js/script.json")
                 link.addEventListener('click', e => {
                     e.preventDefault();
                     let mediaDescription = e.currentTarget.getAttribute('alt');
-                    new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription, altMedias);
-                    console.log(mediaDescription);
+                    new lightbox(e.currentTarget.getAttribute('src'), gallery, altMedias,mediaDescription);
                 })
     
                 //Accessibility version
@@ -155,8 +154,7 @@ fetch("../js/script.json")
                     if(e.which === keyCodes.enter){
                         e.preventDefault();
                         let mediaDescription = e.currentTarget.getAttribute('alt');
-                        new lightbox(e.currentTarget.getAttribute('src'), gallery, mediaDescription, altMedias);
-                        
+                        new lightbox(e.currentTarget.getAttribute('src'), gallery, altMedias, mediaDescription);
                     }
                 })
             })
@@ -167,14 +165,13 @@ fetch("../js/script.json")
          * @param {string} url media URL
          * @param {string[]} gallery medias paths of lightbox
          */
-        constructor(url, gallery, altMedias){
-            //this.mediaDescription = mediaDescription;
-            this.element = this.buildDOM(url);
+        constructor(url, gallery, altMedias, mediaDescription){
+            this.element = this.buildDOM(url, mediaDescription);
             this.gallery = gallery;
             this.altMedias = altMedias;
             
             document.body.appendChild(this.element);
-            this.loadMedia(url);
+            this.loadMedia(url,mediaDescription);
             this.onKeyUp = this.onKeyUp.bind(this)
             document.addEventListener('keyup', this.onKeyUp.bind(this))
         }
@@ -183,8 +180,10 @@ fetch("../js/script.json")
          * @param {string} url media URL
          */
         loadMedia(url, mediaDescription){
+            let titleMedia = document.querySelector('.titleMedia');
+            titleMedia.innerHTML = mediaDescription.split(',')[0];
+
             const image = new Image();
-           
             const video = document.createElement('video');
             video.setAttribute('controls', "");
             const container = this.element.querySelector('.mediaContainer');
@@ -192,8 +191,7 @@ fetch("../js/script.json")
             container.innerHTML = "";
             this.url = url;
             this.mediaDescription = mediaDescription;
-            
-
+        
             if(url.includes('jpg')){                
                 container.appendChild(image);
                 image.src = url;
@@ -201,7 +199,6 @@ fetch("../js/script.json")
             } else if(url.includes('mp4')){
                 container.appendChild(video);
                 video.src = url;
-                video.alt = mediaDescription;
             }
         }
 
@@ -236,18 +233,17 @@ fetch("../js/script.json")
         next(e){
             e.preventDefault();
             let i = this.gallery.findIndex(image => image === this.url);
-            //let p = this.altMedias.findIndex(media => media === this.mediaDescription);
-            console.log(i);
-            console.log(p);
-
+            let p = this.altMedias.findIndex(media => media === this.mediaDescription);
+           
             if(i === this.gallery.length - 1){
                 i = -1;
             }
-            // if(p === this.altMedias.length -1){
-            //     p = -1;
-            // }
+            
+            if(p === this.altMedias.length - 1){
+                p = -1;
+            }
 
-           this.loadMedia(this.gallery[i + 1]);
+           this.loadMedia(this.gallery[i + 1], this.altMedias[p + 1]);
         }
 
         /**
@@ -257,10 +253,17 @@ fetch("../js/script.json")
         previous(e){
             e.preventDefault();
             let i = this.gallery.findIndex(image => image === this.url);
+            let p = this.altMedias.findIndex(media => media === this.mediaDescription);
+
             if(i === 0){
                 i = this.gallery.length;
             }
-            this.loadMedia(this.gallery[i - 1]);
+
+            if(p === 0){
+                p = this.altMedias.length;
+            }
+
+            this.loadMedia(this.gallery[i - 1], this.altMedias[p - 1]);
         }
 
         /**
@@ -276,6 +279,7 @@ fetch("../js/script.json")
             <button type="button" class="nextMedia"></button>
             <button type="button" class="previousMedia"></button>
             <div class="mediaContainer"></div>
+            <span class='titleMedia'></span>
             `
             dom.querySelector('.closeLightbox').addEventListener('click', this.close.bind(this));
             dom.querySelector('.nextMedia').addEventListener('click', this.next.bind(this));
@@ -332,6 +336,33 @@ fetch("../js/script.json")
             incrementationLikes();
         }
     })
+
+    /////////////////////////////Total likes + price per day/////////////////////////////
+    let infosPhotographer = document.createElement('aside');
+    infosPhotographer.classList.add('infosPhotographer');
+
+    let heart = document.createElement('i');
+    heart.innerHTML = `<i class="fas fa-heart" aria-label="likes"></i>`
+
+    media.forEach(media => {
+        if(media.photographerId == paramID){
+            totalLikes.push( media.likes);
+        }
+    })
+
+    const reducer = (accumulator, curr) => accumulator + curr;
+    let resultTotalLikes = document.createElement('span');
+    resultTotalLikes.innerHTML = totalLikes.reduce(reducer);
+
+    let containerLikes = document.createElement('div');
+    containerLikes.classList.add('containerLikes');
+    containerLikes.append(resultTotalLikes, heart);
+
+    infosPhotographer.appendChild(containerLikes);
+    infosPhotographer.appendChild(pricePerDay)
+    
+    document.body.appendChild(infosPhotographer);
+
 })
 //End of fetch//
 

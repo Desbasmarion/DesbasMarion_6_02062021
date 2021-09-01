@@ -247,20 +247,23 @@ h1{
     cursor: pointer;
     margin-bottom: 3%;
 }
-.title_media{
+.title_media, .titleMedia{
     font-weight: normal;
     color: #901C1C;
     font-size: 18px;
+}
+.titleMedia{
+    margin-left: 12%;
 }
 .media_infos{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     h2{
         width: 80%;
     }
-    p, i, span{
+    p, i{
         color: #901C1C;
     }
     p{
@@ -284,6 +287,18 @@ h1{
 .gallery > select{
     border-radius: 5px;
     border: none;
+}
+.infosPhotographer{
+    background-color: #DB8876;
+    width: 17%;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.7%;
+    position: fixed;
+    bottom: 0;
+    right: 1.5%;
+    font-weight: 600;
 }
 
 //Layout Modal contact
@@ -395,10 +410,12 @@ form{
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 95%;
+        height: 90%;
+        margin-bottom: 1%;
         img, video{
             max-width: 100%;
             height: 100%;
+            border-radius: 5px;
         }
     }
 }
@@ -447,8 +464,27 @@ form{
     .file_photographer{
         width: 100%;
     }
+    //Responsive modale 
+    #dialog{
+        padding: 0.5em;
+        .buttonClose{
+            left: 90%;
+        }
+    }
+    form{
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        padding-left: 1%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+    }
 
     //Responsive files photographers
+    .infosPhotographer{
+        display: none;
+    }
     .logo_file{
         width: 50%;
         margin: auto;
@@ -459,9 +495,10 @@ form{
         padding: 0;
         width: 100%;
         height: auto;
+        margin-bottom: 5%;
         h1{
             position: initial;
-            font-size: 36px;
+            font-size: 30px;
             width: 65%;
             margin-left: -0.1em;
         }
@@ -474,10 +511,10 @@ form{
             margin-bottom: 1%;
         }
         img{
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             right: 20px;
-            top: 90px;
+            top: 88px;
         }
         ul{
             margin-left: 0;
@@ -486,7 +523,7 @@ form{
             font-size: 13px;
         }
         .hashtag{
-            font-size: 0.8em;
+            font-size: 0.7em;
         }
     }
     .button_contact{
@@ -495,6 +532,45 @@ form{
         bottom: 5%;
         width: auto;
         height: auto;
+    }
+    .gallery > label{
+        display: none;
+    }
+    .gallery > select{
+        display: none;
+    }
+    #medias_photographer{
+        flex-direction: column;
+    }
+    .block_photo{
+        width: 100%;
+        margin-bottom: 10%;
+    }
+    //Responsive lightbox mobile
+    .lightbox{
+        .closeLightbox{
+            height: 15px;
+            width: 15px;
+            right: 20px;
+        }
+        .nextMedia, .previousMedia{
+            height: 15px;
+            width: 10px;
+        }
+        .nextMedia{
+            right: 15px;
+        }
+        .previousMedia{
+            left: 15px;
+        }
+        .mediaContainer{
+            margin: 20px 40px;
+            height: 87%;
+            margin-bottom: 2%;
+        }
+        img{
+            object-fit: cover;
+        }
     }
 }
 
@@ -521,6 +597,9 @@ form{
         h1{
             font-size: 30px;
         }
+        ul{
+            margin-left: 0;
+        }
         .hashtag{
             font-size: 0.7em;
         }
@@ -529,8 +608,16 @@ form{
         width: auto;
         height: auto;
         font-size: 12px;
-        bottom: 195px;
-        left: 350px;
+        bottom: 200px;
+        left: 320px;
+    }
+    .media_infos{
+        h2, p, span{
+            font-size: 14px;
+        }
+    }
+    .lightbox .mediaContainer{
+        height: 85%;
     }
 }
 //Responsive 4K version
@@ -542,17 +629,11 @@ form{
         left: 600px;
     }
     .media_infos{
-        span{
-            width: 20%;
-        }
         p{
             width: 0;
         }
         h2{
             width: 85%;
-        }
-        :nth-child(5){
-            width: auto;
         }
     }
     .block_photo{
