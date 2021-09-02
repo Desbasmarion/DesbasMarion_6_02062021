@@ -1,0 +1,26 @@
+{
+  "name": "projet-6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Desbasmarion/DesbasMarion_6_02062021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Desbasmarion/DesbasMarion_6_02062021/issues"
+  },
+  "homepage": "https://github.com/Desbasmarion/DesbasMarion_6_02062021#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.24.2"
+  }
+}

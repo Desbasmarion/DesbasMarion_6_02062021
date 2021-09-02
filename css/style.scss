@@ -451,10 +451,12 @@ form{
     h1{
         font-size: 14px;
         position: absolute;
-        bottom: 382px;
+        bottom: 0;
         right: 10px;
         font-weight: 400;
         width: auto;
+        height: 100%;
+        top: 18px;
     }
     #allFilesPhotographers{
         flex-direction: column;
