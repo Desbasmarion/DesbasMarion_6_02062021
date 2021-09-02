@@ -35,7 +35,7 @@ body {
   margin: 0 auto;
 }
 
-.photographers--redirect {
+#photographers--redirect {
   height: 1.5em;
   width: 10em;
   border-radius: 0.3em;
@@ -51,6 +51,16 @@ body {
   font-weight: bold;
   color: black;
   z-index: 500;
+}
+
+.cVisible {
+  bottom: 20px;
+  opacity: 1;
+}
+
+.cInvisible {
+  bottom: -35px;
+  opacity: 0;
 }
 
 #banner_index {
@@ -73,7 +83,8 @@ body {
   padding: 0;
   flex-wrap: wrap;
 }
-.tags span {
+.tags li {
+  list-style: none;
   border: 0.5px solid #C4C4C4;
   box-sizing: border-box;
   border-radius: 11px;
@@ -83,7 +94,7 @@ body {
   margin-right: 0.5em;
   padding: 0.4em;
 }
-.tags span:hover {
+.tags li:hover {
   color: white;
   background-color: #901C1C;
   cursor: pointer;
@@ -132,7 +143,8 @@ h1 {
   margin: 0.1875em;
   padding: 0;
 }
-.file_photographer span {
+.file_photographer li {
+  list-style: none;
   border: 0.5px solid #C4C4C4;
   box-sizing: border-box;
   border-radius: 11px;
@@ -142,7 +154,7 @@ h1 {
   margin-right: 0.5em;
   padding: 0.4em;
 }
-.file_photographer span:hover {
+.file_photographer li:hover {
   color: white;
   background-color: #901C1C;
   cursor: pointer;

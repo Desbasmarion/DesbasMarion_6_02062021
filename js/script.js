@@ -1,5 +1,12 @@
 let containerFilesPhotograhers = document.getElementById('allFilesPhotographers');
 
+//Scroll button to the top 
+document.addEventListener('DOMContentLoaded', function() {
+	window.onscroll = function(ev) {
+	  document.getElementById("photographers--redirect").className = (window.pageYOffset > 100) ? "cVisible" : "cInvisible";
+	};
+  });
+
 //Recovery JSON data
 fetch('../js/script.json')
 	.then((response) => response.json())
@@ -36,7 +43,7 @@ fetch('../js/script.json')
 					//Creation span for each tag
 					let ulTags = document.createElement('ul');
 					file.tags.forEach( tag => {
-						let spanTag = document.createElement('span');
+						let spanTag = document.createElement('li');
 						spanTag.classList.add('hashtag');
 						spanTag.innerHTML += `#${tag}`;
 						ulTags.append(spanTag);

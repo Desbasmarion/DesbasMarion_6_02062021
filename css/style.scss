@@ -26,7 +26,7 @@
 body{
     margin: 0 auto;
 }
-.photographers--redirect {
+#photographers--redirect {
         height: 1.5em;
         width: 10em;
         border-radius: 0.3em;
@@ -42,6 +42,14 @@ body{
         font-weight: bold;
         color: black;
         z-index: 500;
+}
+.cVisible{
+    bottom:20px;
+    opacity:1;
+}
+.cInvisible{
+    bottom:-35px;
+    opacity:0;
 }
 #banner_index{
     display: flex;
@@ -60,7 +68,8 @@ body{
     justify-content: space-between;
     padding: 0;
     flex-wrap: wrap;
-    span{
+    li{
+        list-style: none;
         border: 0.5px solid #C4C4C4;
         box-sizing: border-box;
         border-radius: 11px;
@@ -116,7 +125,8 @@ h1{
         margin: 0.1875em;
         padding: 0;
     }
-        span{
+        li{
+            list-style: none;
             border: 0.5px solid #C4C4C4;
             box-sizing: border-box;
             border-radius: 11px;
