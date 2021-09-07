@@ -55,7 +55,7 @@ fetch('../js/script.json')
 				function createImage(){
 					htmlContainerMedia += `
                     <article class="block_photo">
-                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media" alt="${item.title}, close up view"  tabindex="0">
+                        <img src="../Sample_Photos/${item.photographerId}/${item.image}" class="visual_media" aria-labelledby="${item.title}, close up view" alt="${item.alt}" tabindex="0">
                         <div class="media_infos">
                             <h2 class="title_media">${item.title}</h2>
                             <p class="number_likes" data-media='${item.id}'>${item.likes}</p>
@@ -68,7 +68,7 @@ fetch('../js/script.json')
 				function createVideo(){
 					htmlContainerMedia += `
                     <article class="block_photo">
-                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media" alt="${item.title}, close up view" tabindex="0"></video>
+                        <video src="../Sample_Photos/${item.photographerId}/${item.video}" class="visual_media" aria-labelledby="${item.title}, close up view" alt="${item.alt}" tabindex="0"></video>
                         <div class="media_infos">
                             <h2 class="title_media">${item.title}</h2>
                             <p class="number_likes" data-media="${item.id}">${item.likes}</p>
@@ -137,21 +137,24 @@ fetch('../js/script.json')
 				const links = Array.from(document.querySelectorAll('.visual_media'));
 
 				const gallery = links.map(link => link.getAttribute('src'));
-				const altMedias = links.map(link => link.getAttribute('alt'));
+				const altMedias = links.map(link => link.getAttribute('aria-labelledby'));
+				const altText = links.map(link => link.getAttribute('alt'));
 
 				links.forEach(link => {
 					link.addEventListener('click', e => {
 						e.preventDefault();
-						const mediaDescription = e.currentTarget.getAttribute('alt');
-						new lightbox(e.currentTarget.getAttribute('src'), gallery, altMedias,mediaDescription);
+						const mediaDescription = e.currentTarget.getAttribute('aria-labelledby');
+						const textMedia = e.currentTarget.getAttribute('alt');
+						new lightbox(e.currentTarget.getAttribute('src'), gallery, altMedias,mediaDescription, altText, textMedia);
 					});
     
 					//Accessibility version
 					link.addEventListener('keydown', e => {
 						if(e.which === keyCodes.enter){
 							e.preventDefault();
-							const mediaDescription = e.currentTarget.getAttribute('alt');
-							new lightbox(e.currentTarget.getAttribute('src'), gallery, altMedias, mediaDescription);
+							const mediaDescription = e.currentTarget.getAttribute('aria-labelledby');
+							const textMedia = e.currentTarget.getAttribute('alt');
+							new lightbox(e.currentTarget.getAttribute('src'), gallery, altMedias, mediaDescription, altText, textMedia);
 						}
 					});
 				});
@@ -162,13 +165,14 @@ fetch('../js/script.json')
          * @param {string} url media URL
          * @param {string[]} gallery medias paths of lightbox
          */
-			constructor(url, gallery, altMedias, mediaDescription){
-				this.element = this.buildDOM(url, mediaDescription);
+			constructor(url, gallery, altMedias, mediaDescription, altText, textMedia){
+				this.element = this.buildDOM(url, mediaDescription, textMedia);
 				this.gallery = gallery;
 				this.altMedias = altMedias;
+				this.altText = altText;
             
 				document.body.appendChild(this.element);
-				this.loadMedia(url,mediaDescription);
+				this.loadMedia(url,mediaDescription, textMedia);
 				this.onKeyUp = this.onKeyUp.bind(this);
 				document.addEventListener('keyup', this.onKeyUp.bind(this));
 			}
@@ -176,10 +180,10 @@ fetch('../js/script.json')
          * 
          * @param {string} url media URL
          */
-			loadMedia(url, mediaDescription){
+			loadMedia(url, mediaDescription, textMedia){
 				const titleMedia = document.querySelector('.titleMedia');
 				titleMedia.innerHTML = mediaDescription.split(',')[0];
-
+				
 				const image = new Image();
 				const video = document.createElement('video');
 				video.setAttribute('controls', '');
@@ -188,11 +192,13 @@ fetch('../js/script.json')
 				container.innerHTML = '';
 				this.url = url;
 				this.mediaDescription = mediaDescription;
+				this.textMedia = textMedia;
         
 				if(url.includes('jpg')){                
 					container.appendChild(image);
 					image.src = url;
-					image.alt = mediaDescription;
+					image.ariaLabelledby = mediaDescription;
+					image.alt = textMedia;
 				} else if(url.includes('mp4')){
 					container.appendChild(video);
 					video.src = url;
@@ -231,6 +237,7 @@ fetch('../js/script.json')
 				e.preventDefault();
 				let i = this.gallery.findIndex(image => image === this.url);
 				let p = this.altMedias.findIndex(media => media === this.mediaDescription);
+				let u = this.altText.findIndex(alt => alt === this.textMedia);
            
 				if(i === this.gallery.length - 1){
 					i = -1;
@@ -240,7 +247,11 @@ fetch('../js/script.json')
 					p = -1;
 				}
 
-				this.loadMedia(this.gallery[i + 1], this.altMedias[p + 1]);
+				if(u === this.altText.length - 1){
+					u = -1;
+				}
+
+				this.loadMedia(this.gallery[i + 1], this.altMedias[p + 1], this.altText[u + 1]);
 			}
 
 			/**
@@ -251,6 +262,7 @@ fetch('../js/script.json')
 				e.preventDefault();
 				let i = this.gallery.findIndex(image => image === this.url);
 				let p = this.altMedias.findIndex(media => media === this.mediaDescription);
+				let u = this.altText.findIndex(alt => alt === this.textMedia);
 
 				if(i === 0){
 					i = this.gallery.length;
@@ -260,7 +272,11 @@ fetch('../js/script.json')
 					p = this.altMedias.length;
 				}
 
-				this.loadMedia(this.gallery[i - 1], this.altMedias[p - 1]);
+				if(u === 0){
+					u = this.altText.length;
+				}
+
+				this.loadMedia(this.gallery[i - 1], this.altMedias[p - 1], this.altText[u - 1]);
 			}
 
 			/**
